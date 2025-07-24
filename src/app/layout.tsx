@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Lexend } from "next/font/google";
 import "./globals.css";
+import AuthSessionProvider from "@/components/SessionProvider";
 
 const lexendSans = Lexend({
   variable: "--font-lexend-sans",
@@ -20,7 +21,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${lexendSans.className} antialiased`}>{children}</body>
+      <body className={`${lexendSans.className} antialiased`}>
+        <AuthSessionProvider>
+          {/* <SessionInitializer session={session} /> */}
+          {children}
+        </AuthSessionProvider>
+      </body>
     </html>
   );
 }
