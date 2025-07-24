@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model About {
+  id         String   @id @default(cuid())
+  location   String
+  content    String
+  image      String
+  curriculum String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Project {
+  id           String        @id @default(cuid())
+  title        String
+  description  String
+  image        String
+  demoUrl      String
+  repoUrl      String
+  isFeatured   Boolean       @default(false)
+  projectTechs ProjectTech[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Tech {
+  id           String        @id @default(cuid())
+  name         String        @unique
+  projectTechs ProjectTech[]
+}
+
+model ProjectTech {
+  projectId String
+  techId    String
+  ordem     Int
+  createdAt DateTime @default(now())
+
+  project Project @relation(fields: [projectId], references: [id])
+  tech    Tech    @relation(fields: [techId], references: [id])
+
+  @@id([projectId, techId])
+}
+
+model Skill {
+  id        String   @id @default(cuid())
+  icon      String
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Contact {
+  id        String   @id @default(cuid())
+  icon      String
+  name      String
+  user      String
+  link      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
