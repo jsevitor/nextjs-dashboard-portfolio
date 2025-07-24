@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Lexend } from "next/font/google";
-import "./globals.css";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 import AuthSessionProvider from "@/components/SessionProvider";
+import SessionInitializer from "@/components/SessionInitializer";
+import "./globals.css";
 
 const lexendSans = Lexend({
   variable: "--font-lexend-sans",
@@ -14,16 +17,17 @@ export const metadata: Metadata = {
   description: "Dashboard para gerenciamento de portfólio.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession(authOptions);
   return (
     <html lang="en">
       <body className={`${lexendSans.className} antialiased`}>
         <AuthSessionProvider>
-          {/* <SessionInitializer session={session} /> */}
+          <SessionInitializer session={session} />
           {children}
         </AuthSessionProvider>
       </body>

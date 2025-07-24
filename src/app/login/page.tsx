@@ -31,7 +31,7 @@ export default function LoginPage() {
           <span>Entrar com GitHub</span>
         </button>
         <button
-          className={`px-4 bg-foreground text-background rounded hover:bg-gray-medium hover:text-foreground border border-foreground flex justify-center items-center gap-2 cursor-pointer py-2 mt-12`}
+          className={`px-4 bg-foreground text-background rounded hover:bg-gray-medium hover:text-foreground border border-foreground flex justify-center items-center gap-2 cursor-pointer py-2 `}
           onClick={() => signIn("google")}
         >
           <i className="bi bi-github"></i>
