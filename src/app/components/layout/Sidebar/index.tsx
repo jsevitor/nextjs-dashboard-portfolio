@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 // import ThemeToggle from "./ThemeToggle";
 // import UserInfro from "./UserInfo";
 import { useState } from "react";
+import UserInfro from "../../user/UserInfo";
 // import { ButtonHamburger } from "./Buttons";
 
 export default function Sidebar() {
@@ -34,7 +35,7 @@ export default function Sidebar() {
     }`;
 
   return (
-    <div className="w-full lg:w-1/5 2xl:w-1/6 h-auto lg:h-screen grid grid-cols-2 lg:grid-cols-1 lg:grid-rows-[auto_1fr_auto] border-b lg:border-r border-border-color py-4 pl-4">
+    <div className="w-full lg:w-1/5 2xl:w-1/6 h-auto lg:h-screen grid grid-cols-2 lg:grid-cols-1 lg:grid-rows-[auto_1fr_auto] border-b lg:border-r lg:border-b-0 border-border-color py-4 pl-4">
       <div className="flex flex-col items-center gap-2 py-2 pr-4">
         <h1 className="font-bold text-2xl">DASHBOARD</h1>
         <h2 className="tracking-[0.5rem] text-sm  font-extralight">
@@ -60,7 +61,7 @@ export default function Sidebar() {
         </ul>
       </nav>
       <div className="hidden lg:flex lg:justify-center">
-        {/* <UserInfro /> */}
+        <UserInfro />
       </div>
 
       <div className="flex justify-end items-center">
@@ -83,7 +84,7 @@ export default function Sidebar() {
           ))}
           <li className="flex justify-center">{/* <ThemeToggle /> */}</li>
         </ul>
-        {/* <UserInfro /> */}
+        <UserInfro />
       </nav>
     </div>
   );
