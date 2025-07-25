@@ -3,10 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 // import ThemeToggle from "./ThemeToggle";
-// import UserInfro from "./UserInfo";
 import { useState } from "react";
+import { ButtonHamburger } from "../../ui/buttons";
 import UserInfro from "../../user/UserInfo";
-// import { ButtonHamburger } from "./Buttons";
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,18 +29,19 @@ export default function Sidebar() {
   const linkClasses = (href: string) =>
     `py-2 pl-2 rounded-sm rounded-r-none cursor-pointer font-extralight ${
       pathname === href
-        ? "bg-foreground text-background font-semibold"
-        : "hover:bg-foreground hover:text-background"
+        ? "bg-highlight text-background font-semibold"
+        : "hover:bg-highlight hover:text-background"
     }`;
 
   return (
-    <div className="w-full lg:w-1/5 2xl:w-1/6 h-auto lg:h-screen grid grid-cols-2 lg:grid-cols-1 lg:grid-rows-[auto_1fr_auto] border-b lg:border-r lg:border-b-0 border-border-color py-4 pl-4">
+    <div className="w-full lg:w-1/5 2xl:w-1/6 h-auto lg:h-screen bg-gray-lighter grid grid-cols-2 lg:grid-cols-1 lg:grid-rows-[auto_1fr_auto] border-b lg:border-r lg:border-b-0 border-gray-medium shadow-md py-4 pl-4">
       <div className="flex flex-col items-center gap-2 py-2 pr-4">
         <h1 className="font-bold text-2xl">DASHBOARD</h1>
         <h2 className="tracking-[0.5rem] text-sm  font-extralight">
           PORTFÓLIO
         </h2>
       </div>
+
       {/* Menu Desktop */}
       <nav className="py-4 2xl:mt-8 hidden lg:flex gap-12 items-center lg:items-start ">
         <ul className="flex flex-col gap-2 flex-1">
@@ -65,7 +65,7 @@ export default function Sidebar() {
       </div>
 
       <div className="flex justify-end items-center">
-        {/* <ButtonHamburger action={() => setIsOpen(!isOpen)} icon={menuIcon} /> */}
+        <ButtonHamburger action={() => setIsOpen(!isOpen)} icon={menuIcon} />
       </div>
 
       {/* Menu Mobile */}
