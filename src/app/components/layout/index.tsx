@@ -1,2 +1,3 @@
-export { default as Layout } from "./Layout";
-export { default as Sidebar } from "../layout/Sidebar";
+export { Layout } from "./Layout";
+export { Sidebar } from "../layout/Sidebar";
+export { Modal } from "../layout/Modal";

@@ -1,7 +1,7 @@
 // import Footer from "./Footer";
-import Sidebar from "@/app/components/layout/Sidebar";
+import { Sidebar } from "../Sidebar";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex flex-col lg:flex-row w-full h-dvh lg:overflow-hidden">
       <Sidebar />

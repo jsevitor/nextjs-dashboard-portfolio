@@ -7,7 +7,7 @@ import { useState } from "react";
 import { ButtonHamburger } from "../../ui/buttons";
 import UserInfro from "../../user/UserInfo";
 
-export default function Sidebar() {
+export function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
