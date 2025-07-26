@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Layout, Modal } from "../components/layout";
 import { ButtonUrl, ButtonVariant } from "../components/ui/buttons";
 import UploadInput from "../components/upload/UploadInput";
+import { AboutCardSkeleton } from "../components/ui/skeletons";
 
 type About = {
   id: string;
@@ -117,8 +118,7 @@ export default function About() {
       </div>
 
       {loading ? (
-        // <SkeletonAbout />
-        <p>Carregando...</p>
+        <AboutCardSkeleton />
       ) : (
         abouts.map((about) => (
           <div

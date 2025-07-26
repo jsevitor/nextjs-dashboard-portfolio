@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Layout, Modal } from "../components/layout";
 import { ButtonVariant } from "../components/ui/buttons";
+import { StackCardSkeleton } from "../components/ui/skeletons";
 
 type Stacks = {
   id: string;
@@ -98,7 +99,7 @@ export default function Stacks() {
       {loading
         ? Array(5)
             .fill(null)
-            .map((_, i) => <div key={i} />)
+            .map((_, i) => <StackCardSkeleton key={i} />)
         : stacks.map((stack) => (
             <div
               className="flex items-center gap-8 bg-gray-lighter shadow px-4 py-2 rounded-md mb-4 text-sm"
@@ -133,7 +134,7 @@ export default function Stacks() {
           ))}
 
       <Modal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)}>
-        <div className="pb-4 border-b border-gray-medium flex-shrink-0">
+        <div className="pb-4 border-b border-GR flex-shrink-0">
           <h1 className="text-2xl font-light">Nova Stack</h1>
         </div>
         <form className="flex-1 overflow-y-auto my-4 flex flex-col gap-2">
@@ -156,7 +157,7 @@ export default function Stacks() {
             />
           </div>
         </form>
-        <div className="flex-shrink-0 pt-4 flex gap-4 justify-center border-t border-gray-medium">
+        <div className="flex-shrink-0 pt-4 flex gap-4 justify-center border-t border-GR">
           <ButtonVariant variant="save" action={handleSubmit} />
           <ButtonVariant variant="close" action={() => setModalIsOpen(false)} />
         </div>

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Layout, Modal } from "../components/layout";
 import { ButtonVariant } from "../components/ui/buttons";
+import { TechCardSkeleton } from "../components/ui/skeletons";
 
 type Techs = {
   id: string;
@@ -99,7 +100,7 @@ export default function Techs() {
       {loading
         ? Array(5)
             .fill(null)
-            .map((_, i) => <div key={i} />)
+            .map((_, i) => <TechCardSkeleton key={i} />)
         : techs.map((tech) => (
             <div
               className="flex items-center bg-gray-lighter shadow gap-8 px-4 py-2 rounded mb-4"

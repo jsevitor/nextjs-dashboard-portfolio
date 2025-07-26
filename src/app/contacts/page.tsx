@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Layout, Modal } from "../components/layout";
 import { ButtonVariant } from "../components/ui/buttons";
+import { ContactCardSkeleton } from "../components/ui/skeletons";
 
 type Contacts = {
   id: string;
@@ -106,7 +107,7 @@ export default function Contacts() {
       {loading
         ? Array(5)
             .fill(null)
-            .map((_, i) => <div key={i} />)
+            .map((_, i) => <ContactCardSkeleton key={i} />)
         : contact.map((contact) => (
             <div
               className="flex flex-col lg:flex-row items-center gap-8 bg-gray-lighter shadow px-4 py-2 rounded-md mb-4"

@@ -5,6 +5,7 @@ import { Layout, Modal } from "../components/layout";
 import { ButtonUrl, ButtonVariant } from "../components/ui/buttons";
 import Image from "next/image";
 import UploadInput from "../components/upload/UploadInput";
+import { ProjectCardSkeleton } from "../components/ui/skeletons";
 
 type Project = {
   id: string;
@@ -160,7 +161,7 @@ export default function About() {
       {loading
         ? Array(3)
             .fill(null)
-            .map((_, i) => <div key={i} />)
+            .map((_, i) => <ProjectCardSkeleton key={i} />)
         : projects.map((project) => (
             <div
               className="flex flex-col lg:flex-row items-center gap-8 bg-gray-lighter shadow p-4 lg:px-4 lg:py-2 mb-4 rounded-md text-sm"
