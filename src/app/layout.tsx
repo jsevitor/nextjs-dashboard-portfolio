@@ -5,6 +5,7 @@ import { authOptions } from "@/lib/auth";
 import AuthSessionProvider from "@/components/SessionProvider";
 import SessionInitializer from "@/components/SessionInitializer";
 import "./globals.css";
+import { Toaster } from "sonner";
 
 const lexendSans = Lexend({
   variable: "--font-lexend-sans",
@@ -40,6 +41,7 @@ export default async function RootLayout({
           <SessionInitializer session={session} />
           {children}
         </AuthSessionProvider>
+        <Toaster richColors position="top-right" />
       </body>
     </html>
   );

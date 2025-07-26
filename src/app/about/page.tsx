@@ -6,6 +6,7 @@ import { Layout, Modal } from "../components/layout";
 import { ButtonUrl, ButtonVariant } from "../components/ui/buttons";
 import UploadInput from "../components/upload/UploadInput";
 import { AboutCardSkeleton } from "../components/ui/skeletons";
+import { toast } from "sonner";
 
 type About = {
   id: string;
@@ -59,7 +60,7 @@ export default function About() {
 
     if (!location || !content || !image || !curriculum) {
       console.error("Preencha todos os campos obrigatórios");
-      //   toast.error("Preencha todos os campos obrigatórios!");
+      toast.error("Preencha todos os campos obrigatórios!");
       return;
     }
 
@@ -84,13 +85,13 @@ export default function About() {
       fetchAbouts();
 
       if (editingId) {
-        // toast.success("About atualizado com sucesso!");
+        toast.success("About atualizado com sucesso!");
       } else {
-        // toast.success("About criado com sucesso!");
+        toast.success("About criado com sucesso!");
       }
     } catch (error) {
       console.error("Erro ao criar about:", error);
-      //   toast.error("Erro ao criar about!");
+      toast.error("Erro ao criar about!");
     }
   };
 
@@ -103,10 +104,10 @@ export default function About() {
       if (!res.ok) throw new Error("Erro ao excluir sobre");
 
       fetchAbouts();
-      //   toast.success("Sobre deletado com sucesso!");
+      toast.success("Sobre deletado com sucesso!");
     } catch (error) {
       console.error("Erro ao deletar sobre:", error);
-      //   toast.error("Erro ao deletar sobre!");
+      toast.error("Erro ao deletar sobre!");
     }
   };
 

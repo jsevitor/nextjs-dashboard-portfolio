@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Layout, Modal } from "../components/layout";
 import { ButtonVariant } from "../components/ui/buttons";
 import { StackCardSkeleton } from "../components/ui/skeletons";
+import { toast } from "sonner";
 
 type Stacks = {
   id: string;
@@ -64,9 +65,9 @@ export default function Stacks() {
       fetchStacks();
 
       if (editingId) {
-        // toast.success("Stack atualizado com sucesso!");
+        toast.success("Stack atualizado com sucesso!");
       } else {
-        // toast.success("Stack criado com sucesso!");
+        toast.success("Stack criado com sucesso!");
       }
     } catch (error) {
       console.error("Erro ao salvar stack:", error);
@@ -82,10 +83,10 @@ export default function Stacks() {
       if (!res.ok) throw new Error("Erro ao excluir stack");
 
       fetchStacks();
-      // toast.success("Stack deletado com sucesso!");
+      toast.success("Stack deletado com sucesso!");
     } catch (error) {
       console.error("Erro ao deletar stack:", error);
-      // toast.error("Erro ao deletar stack!");
+      toast.error("Erro ao deletar stack!");
     }
   };
 

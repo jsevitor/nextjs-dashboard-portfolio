@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Layout, Modal } from "../components/layout";
 import { ButtonVariant } from "../components/ui/buttons";
 import { ContactCardSkeleton } from "../components/ui/skeletons";
+import { toast } from "sonner";
 
 type Contacts = {
   id: string;
@@ -71,13 +72,13 @@ export default function Contacts() {
       fetchContacts();
 
       if (editingId) {
-        // toast.success("Contato atualizado com sucesso");
+        toast.success("Contato atualizado com sucesso");
       } else {
-        // toast.success("Contato criado com sucesso");
+        toast.success("Contato criado com sucesso");
       }
     } catch (error) {
       console.error("Erro ao salvar contato:", error);
-      // toast.error("Erro ao salvar contato");
+      toast.error("Erro ao salvar contato");
     }
   };
 
@@ -90,10 +91,10 @@ export default function Contacts() {
       if (!res.ok) throw new Error("Erro ao excluir contato");
 
       fetchContacts();
-      // toast.success("Contato deletado com sucesso!");
+      toast.success("Contato deletado com sucesso!");
     } catch (error) {
       console.error("Erro ao deletar contato:", error);
-      // toast.error("Erro ao deletar contato!");
+      toast.error("Erro ao deletar contato!");
     }
   };
 

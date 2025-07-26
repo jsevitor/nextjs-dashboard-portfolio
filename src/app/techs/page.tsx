@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Layout, Modal } from "../components/layout";
 import { ButtonVariant } from "../components/ui/buttons";
 import { TechCardSkeleton } from "../components/ui/skeletons";
+import { toast } from "sonner";
 
 type Techs = {
   id: string;
@@ -65,9 +66,9 @@ export default function Techs() {
       fetchTechs();
 
       if (editingId) {
-        // toast.success("Techs atualizado com sucesso!");
+        toast.success("Techs atualizado com sucesso!");
       } else {
-        // toast.success("Techs criado com sucesso!");
+        toast.success("Techs criado com sucesso!");
       }
     } catch (error) {
       console.error("Erro ao salvar techs:", error);
@@ -83,10 +84,10 @@ export default function Techs() {
       if (!res.ok) throw new Error("Erro ao excluir techs");
 
       fetchTechs();
-      // toast.success("Techs deletado com sucesso!");
+      toast.success("Techs deletado com sucesso!");
     } catch (error) {
       console.error("Erro ao deletar techs:", error);
-      // toast.error("Erro ao deletar techs!");
+      toast.error("Erro ao deletar techs!");
     }
   };
 

@@ -4,10 +4,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { ButtonHamburger } from "../../ui/buttons";
+import { useLockBodyScroll } from "@/hooks/useLockBodyScroll";
 import UserInfro from "../../user/UserInfo";
 import ThemeToggle from "../../upload/theme_toggle/ThemeToggle";
 import LogoutButton from "../../user/LogoutButton";
-import { useLockBodyScroll } from "@/hooks/useLockBodyScroll";
 
 export function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);

@@ -1,11 +1,12 @@
 "use client";
 
+import Image from "next/image";
+import UploadInput from "../components/upload/UploadInput";
 import { useEffect, useState } from "react";
 import { Layout, Modal } from "../components/layout";
 import { ButtonUrl, ButtonVariant } from "../components/ui/buttons";
-import Image from "next/image";
-import UploadInput from "../components/upload/UploadInput";
 import { ProjectCardSkeleton } from "../components/ui/skeletons";
+import { toast } from "sonner";
 
 type Project = {
   id: string;
@@ -93,7 +94,7 @@ export default function About() {
     const method = editingId ? "PUT" : "POST";
     const url = editingId ? `/api/projects/${editingId}` : "/api/projects";
 
-    // const toastId = toast.loading("Salvando projeto...");
+    const toastId = toast.loading("Salvando projeto...");
 
     try {
       const response = await fetch(url, {
@@ -106,20 +107,20 @@ export default function About() {
 
       if (!response.ok) throw new Error("Erro ao criar projeto");
 
-      // toast.success("Projeto salvo com sucesso!", { id: toastId });
+      toast.success("Projeto salvo com sucesso!", { id: toastId });
       const data = await response.json();
       console.log("Projeto criado com sucesso:", data);
 
       fetchProjects();
 
       if (editingId) {
-        // toast.success("Projeto atualizado com sucesso!");
+        toast.success("Projeto atualizado com sucesso!");
       } else {
-        // toast.success("Projeto adicionado com sucesso!");
+        toast.success("Projeto adicionado com sucesso!");
       }
     } catch (error) {
       console.error("Erro ao enviar projeto:", error);
-      // toast.error("Erro ao enviar projeto!");
+      toast.error("Erro ao enviar projeto!");
     } finally {
       setTitle("");
       setDescription("");
@@ -134,7 +135,7 @@ export default function About() {
   };
 
   const handleDelete = async (id: string) => {
-    // const toastId = toast.loading("Excluindo o projeto...");
+    const toastId = toast.loading("Excluindo o projeto...");
 
     try {
       const res = await fetch(`/api/projects/${id}`, {
@@ -144,10 +145,10 @@ export default function About() {
       if (!res.ok) throw new Error("Erro ao excluir projeto");
 
       fetchProjects();
-      // toast.success("Projeto deletado com sucesso!", { id: toastId });
+      toast.success("Projeto deletado com sucesso!", { id: toastId });
     } catch (error) {
       console.error("Erro ao deletar projeto:", error);
-      // toast.error("Erro ao deletar projeto!");
+      toast.error("Erro ao deletar projeto!");
     }
   };
 
