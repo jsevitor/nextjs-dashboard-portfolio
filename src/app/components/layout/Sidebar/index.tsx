@@ -2,10 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-// import ThemeToggle from "./ThemeToggle";
 import { useState } from "react";
 import { ButtonHamburger } from "../../ui/buttons";
 import UserInfro from "../../user/UserInfo";
+import ThemeToggle from "../../upload/theme_toggle/ThemeToggle";
+import LogoutButton from "../../user/LogoutButton";
+import { useLockBodyScroll } from "@/hooks/useLockBodyScroll";
 
 export function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,6 +18,8 @@ export function Sidebar() {
   if (isOpen) {
     menuIcon = "bi bi-x-lg";
   }
+
+  useLockBodyScroll(isOpen);
 
   const menu = [
     { label: "Dashboard", href: "/", icon: "bi bi-house" },
@@ -57,14 +61,17 @@ export function Sidebar() {
               </li>
             </Link>
           ))}
-          <li>{/* <ThemeToggle /> */}</li>
         </ul>
       </nav>
-      <div className="hidden lg:flex lg:justify-center">
+      <div className="hidden lg:flex lg:flex-col lg:gap-4">
         <UserInfro />
+        <div className="flex justify-around gap-4 pr-4">
+          <ThemeToggle />
+          <LogoutButton />
+        </div>
       </div>
 
-      <div className="flex justify-end items-center">
+      <div className="flex justify-end items-center pr-4">
         <ButtonHamburger action={() => setIsOpen(!isOpen)} icon={menuIcon} />
       </div>
 
@@ -82,7 +89,9 @@ export function Sidebar() {
               </Link>
             </li>
           ))}
-          <li className="flex justify-center">{/* <ThemeToggle /> */}</li>
+          <li className="flex justify-center">
+            <ThemeToggle />
+          </li>
         </ul>
         <UserInfro />
       </nav>

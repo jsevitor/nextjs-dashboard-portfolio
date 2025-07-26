@@ -22,9 +22,6 @@ export default function UserInfro() {
           <div className="font-extralight text-xs">{user?.email}</div>
         </div>
       </div>
-      <div className="flex gap-8">
-        <LogoutButton />
-      </div>
     </div>
   );
 }

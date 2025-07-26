@@ -19,14 +19,12 @@
 }
 
 [data-theme="dark"] {
-  :root {
-    --background: #1f2937;
-    --foreground: #f3f4f6;
-    --highlight: #3266cc;
-    --highlight-hover: #66ccff;
-    --gray-medium: #cccccc;
-    --gray-lighter: #fafafa;
-  }
+  --background: #1f2937;
+  --foreground: #f3f4f6;
+  --highlight: #3266cc;
+  --highlight-hover: #66ccff;
+  --gray-medium: #3c4552;
+  --gray-lighter: #23344d;
 }
 
 * {
