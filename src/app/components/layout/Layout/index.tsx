@@ -1,5 +1,5 @@
-// import Footer from "./Footer";
 import { Sidebar } from "../Sidebar";
+import { Footer } from "../Footer";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -7,7 +7,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <Sidebar />
       <div className="flex flex-col flex-1 overflow-y-auto min-h-dvh">
         <main className="flex-1 p-4 lg:p-8">{children}</main>
-        {/* <Footer /> */}
+        <Footer />
       </div>
     </div>
   );

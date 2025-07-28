@@ -2,6 +2,7 @@
 
 import { signIn, useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
+import { ButtonVariant } from "../components/ui/buttons";
 
 export default function LoginPage() {
   const { data: session } = useSession();
@@ -12,31 +13,29 @@ export default function LoginPage() {
 
   return (
     <div className="container mx-auto h-screen flex justify-center items-center">
-      <div className="border border-foreground lg:w-1/2 h-1/2 flex flex-col items-center justify-center gap-4 p-8">
-        <h1 className="lg:tracking-[1.5rem] text-4xl lg:text-[4rem] text-center font-thin lg:ml-6">
+      <div className="bg-highlight rounded-l-lg shadow-md lg:w-1/3 h-1/2 flex flex-col items-center justify-center gap-4 p-8 text-white">
+        <h1 className="font-bold lg:text-4xl">DASHBOARD</h1>
+        <h2 className="lg:tracking-[1.5rem] text-4xl lg:text-3xl text-center font-thin lg:ml-6">
           PORTFÓLIO
-        </h1>
+        </h2>
+      </div>
+
+      <div className="border border-gray-medium rounded-r-lg shadow-md lg:w-1/3 h-1/2 flex flex-col items-center justify-center gap-4 p-8">
         <h2 className="font-bold lg:text-2xl">LOGIN</h2>
-        {/* <ButtonAction
+        <ButtonVariant
+          variant="save"
           action={() => signIn("github")}
-          icon="bi bi-github"
           label="Entrar com GitHub"
-          className="py-2 mt-12"
-        /> */}
-        <button
-          className={`px-4 bg-foreground text-background rounded hover:bg-gray-medium hover:text-foreground border border-foreground flex justify-center items-center gap-2 cursor-pointer py-2 mt-12`}
-          onClick={() => signIn("github")}
-        >
-          <i className="bi bi-github"></i>
-          <span>Entrar com GitHub</span>
-        </button>
-        <button
-          className={`px-4 bg-foreground text-background rounded hover:bg-gray-medium hover:text-foreground border border-foreground flex justify-center items-center gap-2 cursor-pointer py-2 `}
-          onClick={() => signIn("google")}
-        >
-          <i className="bi bi-github"></i>
-          <span>Entrar com Google</span>
-        </button>
+          icon="bi bi-github"
+          className="flex gap-2"
+        />
+        <ButtonVariant
+          variant="save"
+          action={() => signIn("google")}
+          label="Entrar com Google"
+          icon="bi bi-google"
+          className="flex gap-2"
+        />
       </div>
     </div>
   );

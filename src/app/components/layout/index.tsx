@@ -1,3 +1,4 @@
 export { Layout } from "./Layout";
-export { Sidebar } from "../layout/Sidebar";
-export { Modal } from "../layout/Modal";
+export { Sidebar } from "./Sidebar";
+export { Modal } from "./Modal";
+export { Footer } from "./Footer";
