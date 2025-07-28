@@ -7,6 +7,7 @@ import { ButtonUrl, ButtonVariant } from "../components/ui/buttons";
 import UploadInput from "../components/upload/UploadInput";
 import { AboutCardSkeleton } from "../components/ui/skeletons";
 import { toast } from "sonner";
+import { PageHeader } from "../components/layout/title/PageHeader";
 
 type About = {
   id: string;
@@ -113,8 +114,8 @@ export default function About() {
 
   return (
     <Layout>
-      <div className="border-l-2 border-foreground flex justify-between w-full mt-4 mb-14 px-4">
-        <h1 className="text-3xl">Sobre</h1>
+      <div className="flex justify-between w-full mt-4 mb-14">
+        <PageHeader>Sobre</PageHeader>
         <ButtonVariant variant="add" action={() => setModalIsOpen(true)} />
       </div>
 

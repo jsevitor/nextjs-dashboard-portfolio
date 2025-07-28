@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { MoonLoader } from "react-spinners";
 import {
   LineChart,
   Line,
@@ -31,9 +32,15 @@ export function ProjectsOverTimeChart() {
     fetchData();
   }, []);
 
-  if (loading) return <p className="text-muted">Carregando gráfico...</p>;
+  if (loading)
+    return (
+      <div className="flex justify-center items-center h-32 w-full">
+        <MoonLoader color="var(--highlight)" />
+      </div>
+    );
+
   if (!data.length)
-    return <p className="text-muted">Nenhum projeto encontrado.</p>;
+    return <p className="text-muted">Nenhum dado encontrado.</p>;
 
   return (
     <div className="w-full h-[250px]">

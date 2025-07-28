@@ -2,6 +2,7 @@
 
 import { COLORS } from "@/utils/colors";
 import { useEffect, useState } from "react";
+import { MoonLoader } from "react-spinners";
 import { PieChart, Pie, Tooltip, Cell, ResponsiveContainer } from "recharts";
 
 export function ProjectsByTechChart() {
@@ -24,7 +25,13 @@ export function ProjectsByTechChart() {
     fetchData();
   }, []);
 
-  if (loading) return <p className="text-muted">Carregando gráfico...</p>;
+  if (loading)
+    return (
+      <div className="flex justify-center items-center h-32 w-full">
+        <MoonLoader color="var(--highlight)" />
+      </div>
+    );
+
   if (!data.length)
     return <p className="text-muted">Nenhum dado disponível.</p>;
 

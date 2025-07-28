@@ -5,6 +5,7 @@ import { Layout, Modal } from "../components/layout";
 import { ButtonVariant } from "../components/ui/buttons";
 import { TechCardSkeleton } from "../components/ui/skeletons";
 import { toast } from "sonner";
+import { PageHeader } from "../components/layout/title/PageHeader";
 
 type Techs = {
   id: string;
@@ -93,8 +94,8 @@ export default function Techs() {
 
   return (
     <Layout>
-      <div className="border-l-2 border-foreground flex justify-between w-full mt-4 mb-14 px-4">
-        <h1 className="text-3xl">Techs</h1>
+      <div className="flex justify-between w-full mt-4 mb-14">
+        <PageHeader>Techs</PageHeader>
         <ButtonVariant variant="add" action={() => setModalIsOpen(true)} />
       </div>
 

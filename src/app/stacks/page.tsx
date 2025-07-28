@@ -5,6 +5,7 @@ import { Layout, Modal } from "../components/layout";
 import { ButtonVariant } from "../components/ui/buttons";
 import { StackCardSkeleton } from "../components/ui/skeletons";
 import { toast } from "sonner";
+import { PageHeader } from "../components/layout/title/PageHeader";
 
 type Stacks = {
   id: string;
@@ -92,8 +93,8 @@ export default function Stacks() {
 
   return (
     <Layout>
-      <div className="border-l-2 border-foreground flex justify-between w-full mt-4 mb-14 px-4">
-        <h1 className="text-3xl">Stacks</h1>
+      <div className="flex justify-between w-full mt-4 mb-14">
+        <PageHeader>Stacks</PageHeader>
         <ButtonVariant variant="add" action={() => setModalIsOpen(true)} />
       </div>
 

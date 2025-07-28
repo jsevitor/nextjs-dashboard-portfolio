@@ -1,5 +1,6 @@
 import { COLORS } from "@/utils/colors";
 import { useEffect, useState } from "react";
+import { MoonLoader } from "react-spinners";
 
 export function TechsMostUsed() {
   const [data, setData] = useState<{ name: string; count: number }[]>([]);
@@ -30,9 +31,15 @@ export function TechsMostUsed() {
       }))
     : [];
 
-  if (loading) return <p className="text-muted">Carregando gráfico...</p>;
+  if (loading)
+    return (
+      <div className="flex justify-center items-center h-32 w-full">
+        <MoonLoader color="var(--highlight)" />
+      </div>
+    );
+
   if (!data.length)
-    return <p className="text-muted">Nenhum projeto encontrado.</p>;
+    return <p className="text-muted">Nenhum dado encontrado.</p>;
 
   return (
     <>

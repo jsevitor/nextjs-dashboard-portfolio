@@ -5,6 +5,7 @@ import { Layout, Modal } from "../components/layout";
 import { ButtonVariant } from "../components/ui/buttons";
 import { ContactCardSkeleton } from "../components/ui/skeletons";
 import { toast } from "sonner";
+import { PageHeader } from "../components/layout/title/PageHeader";
 
 type Contacts = {
   id: string;
@@ -100,8 +101,8 @@ export default function Contacts() {
 
   return (
     <Layout>
-      <div className="border-l-2 border-foreground flex justify-between w-full mt-4 mb-14 px-4">
-        <h1 className="text-3xl">Contatos</h1>
+      <div className="flex justify-between w-full mt-4 mb-14">
+        <PageHeader>Contatos</PageHeader>
         <ButtonVariant variant="add" action={() => setModalIsOpen(true)} />
       </div>
 
