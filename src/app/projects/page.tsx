@@ -94,8 +94,6 @@ export default function About() {
     const method = editingId ? "PUT" : "POST";
     const url = editingId ? `/api/projects/${editingId}` : "/api/projects";
 
-    const toastId = toast.loading("Salvando projeto...");
-
     try {
       const response = await fetch(url, {
         method,
@@ -107,7 +105,7 @@ export default function About() {
 
       if (!response.ok) throw new Error("Erro ao criar projeto");
 
-      toast.success("Projeto salvo com sucesso!", { id: toastId });
+      toast.success("Projeto salvo com sucesso!");
       const data = await response.json();
       console.log("Projeto criado com sucesso:", data);
 

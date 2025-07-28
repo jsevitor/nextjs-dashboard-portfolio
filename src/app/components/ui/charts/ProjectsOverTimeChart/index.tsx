@@ -1,0 +1,72 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+
+export function ProjectsOverTimeChart() {
+  const [data, setData] = useState<{ month: string; count: number }[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await fetch("/api/analytics/projects-over-time");
+        const json = await res.json();
+        setData(json);
+      } catch (err) {
+        console.error("Erro ao buscar dados do gráfico:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  if (loading) return <p className="text-muted">Carregando gráfico...</p>;
+  if (!data.length)
+    return <p className="text-muted">Nenhum projeto encontrado.</p>;
+
+  return (
+    <div className="w-full h-[250px]">
+      <ResponsiveContainer width="100%" height="100%">
+        <LineChart data={data}>
+          <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.1} />
+          <XAxis
+            dataKey="month"
+            stroke="var(--foreground)"
+            tick={{ fill: "var(--foreground)" }}
+          />
+          <YAxis
+            allowDecimals={false}
+            stroke="var(--foreground)"
+            tick={{ fill: "var(--foreground)" }}
+          />
+          <Tooltip
+            contentStyle={{
+              backgroundColor: "var(--background)",
+              border: "none",
+            }}
+            labelStyle={{ color: "var(--foreground)" }}
+            itemStyle={{ color: "var(--foreground)" }}
+          />
+          <Line
+            type="monotone"
+            dataKey="count"
+            stroke="#4f46e5"
+            strokeWidth={3}
+            dot={{ r: 4 }}
+          />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
