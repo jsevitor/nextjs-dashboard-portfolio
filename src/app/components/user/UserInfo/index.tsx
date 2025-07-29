@@ -1,5 +1,4 @@
 import { useSessionStore } from "@/stores/sessionStore";
-import LogoutButton from "../LogoutButton";
 import Image from "next/image";
 
 export default function UserInfro() {
