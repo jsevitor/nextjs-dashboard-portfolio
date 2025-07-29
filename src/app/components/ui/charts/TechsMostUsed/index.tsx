@@ -11,7 +11,7 @@ export function TechsMostUsed() {
       try {
         const res = await fetch("/api/analytics/techs-most-used");
         const json = await res.json();
-        setData(json);
+        setData(json.slice(0, 8));
       } catch (err) {
         console.error("Erro ao buscar dados do gráfico:", err);
       } finally {

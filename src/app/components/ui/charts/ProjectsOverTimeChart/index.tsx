@@ -48,7 +48,7 @@ export function ProjectsOverTimeChart() {
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.1} />
           <XAxis
-            dataKey="month"
+            dataKey="day"
             stroke="var(--foreground)"
             tick={{ fill: "var(--foreground)" }}
           />
@@ -68,9 +68,9 @@ export function ProjectsOverTimeChart() {
           <Line
             type="monotone"
             dataKey="count"
-            stroke="#4f46e5"
+            stroke="#3266CC"
             strokeWidth={3}
-            dot={{ r: 4 }}
+            dot={{ r: 5 }}
           />
         </LineChart>
       </ResponsiveContainer>

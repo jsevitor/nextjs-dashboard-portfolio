@@ -33,8 +33,8 @@ export function Sidebar() {
   const linkClasses = (href: string) =>
     `py-2 pl-2 rounded-sm rounded-r-none cursor-pointer font-extralight ${
       pathname === href
-        ? "bg-highlight text-background font-semibold"
-        : "hover:bg-highlight hover:text-background"
+        ? "bg-highlight text-white font-semibold"
+        : "hover:bg-highlight hover:text-white"
     }`;
 
   return (
@@ -63,11 +63,15 @@ export function Sidebar() {
           ))}
         </ul>
       </nav>
-      <div className="hidden lg:flex lg:flex-col lg:gap-4">
+      <div className="hidden lg:flex lg:flex-col lg:gap-4 pr-4">
         <UserInfro />
-        <div className="flex justify-around gap-4 pr-4">
-          <ThemeToggle />
-          <LogoutButton />
+        <div className="flex justify-center ">
+          <span className="w-1/3">
+            <ThemeToggle />
+          </span>
+          <span className="w-1/3">
+            <LogoutButton />
+          </span>
         </div>
       </div>
 
@@ -89,8 +93,13 @@ export function Sidebar() {
               </Link>
             </li>
           ))}
-          <li className="flex justify-center">
-            <ThemeToggle />
+          <li className="flex justify-center w-full">
+            <span className="w-full">
+              <ThemeToggle />
+            </span>
+            <span className="w-full">
+              <LogoutButton />
+            </span>
           </li>
         </ul>
         <UserInfro />

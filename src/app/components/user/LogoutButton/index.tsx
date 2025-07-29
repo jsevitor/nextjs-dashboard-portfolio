@@ -5,11 +5,10 @@ import { signOut } from "next-auth/react";
 export default function LogoutButton() {
   return (
     <button
-      className="border border-highlight text-highlight hover:bg-highlight hover:text-background rounded flex justify-center items-center gap-2 h-6 px-2 cursor-pointer text-sm"
+      className="text-foreground hover:bg-highlight hover:text-white rounded-r flex justify-center items-center gap-2 text-xl border-l border-gray-medium px-2 py-1 w-full"
       onClick={() => signOut()}
     >
       <i className="bi bi-box-arrow-right"></i>
-      <span>Sair</span>
     </button>
   );
 }

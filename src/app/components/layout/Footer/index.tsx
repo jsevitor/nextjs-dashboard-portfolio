@@ -8,7 +8,7 @@ export function Footer() {
         <a
           href="https://github.com/jsevitor"
           target="_blank"
-          className="text-foreground"
+          className="text-highlight hover:underline"
         >
           Vitor Oliveira
         </a>

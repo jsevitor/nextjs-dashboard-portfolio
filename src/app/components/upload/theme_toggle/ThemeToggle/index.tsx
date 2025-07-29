@@ -31,8 +31,8 @@ export default function ThemeToggle() {
   }, [theme]);
 
   return (
-    <div
-      className="transition-all flex items-center justify-center gap-2 rounded cursor-pointer hover:bg-highlight h-6"
+    <button
+      className="transition-all flex items-center justify-center gap-2 text-foreground hover:bg-highlight hover:text-white text-xl px-2 py-1 w-full rounded-l"
       onClick={handleThemeToggle}
     >
       <span className={theme === "light" ? "px-1" : "px-1"}>
@@ -42,6 +42,6 @@ export default function ThemeToggle() {
           }
         ></i>
       </span>
-    </div>
+    </button>
   );
 }

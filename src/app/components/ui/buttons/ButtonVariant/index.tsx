@@ -9,12 +9,12 @@ export function ButtonVariant({
 }: ButtonVariantProps) {
   const base = "px-4 py-1 rounded cursor-pointer";
   const variants = {
-    save: "bg-highlight text-background hover:opacity-80",
-    close: "bg-red-600 text-background hover:opacity-80",
-    add: "bg-highlight text-background hover:opacity-80 flex items-center gap-2",
-    edit: "border border-highlight text-highlight hover:bg-highlight hover:text-background flex items-center gap-2",
+    save: "bg-highlight text-background hover:opacity-80 hover:text-white",
+    close: "bg-red-600 text-background hover:opacity-80 hover:text-white",
+    add: "bg-highlight text-background hover:opacity-80 hover:text-white flex items-center gap-2",
+    edit: "border border-highlight text-highlight hover:bg-highlight hover:text-white flex items-center gap-2",
     delete:
-      "border border-highlight text-highlight hover:bg-highlight hover:text-background flex items-center gap-2",
+      "border border-highlight text-highlight hover:bg-highlight hover:text-white flex items-center gap-2",
   };
 
   const defaultLabels: Record<typeof variant, string> = {

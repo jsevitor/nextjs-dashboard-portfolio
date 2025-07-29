@@ -19,7 +19,7 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
       isOpen={isOpen}
       onRequestClose={onClose}
       overlayClassName="fixed inset-0 bg-[#0f0f0f80] flex items-center justify-center z-80"
-      className="flex flex-col h-full bg-background lg:border lg:border-gray-medium p-6 rounded shadow-lg w-full mx-auto max-w-lg md:max-h-9/10 text-sm"
+      className="flex flex-col h-full bg-background lg:border lg:border-gray-medium p-6 rounded shadow-lg w-full mx-auto max-w-lg md:max-h-9/10 lg:h-fit text-sm"
       contentLabel="Modal"
     >
       {children}
