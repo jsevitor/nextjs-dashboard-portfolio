@@ -1,3 +1,4 @@
+import { projectsData } from "@/data/data";
 import { useEffect, useState } from "react";
 import { MoonLoader } from "react-spinners";
 
@@ -6,14 +7,18 @@ type Project = {
   title: string;
   description: string;
   image: string;
-  projectTechs: {
+  isFeatured: boolean;
+  demoUrl: string;
+  repoUrl: string;
+  createdAt?: string;
+  updatedAt?: string;
+  projectTechs?: {
     tech: {
       id: string;
       name: string;
     };
   }[];
-  demoUrl: string;
-  repoUrl: string;
+  techs?: string[];
 };
 
 export function RecentProjects() {
@@ -21,19 +26,20 @@ export function RecentProjects() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchLastProjects() {
-      try {
-        const res = await fetch("/api/projects");
-        const data = await res.json();
-        setLastProjects(data.slice(0, 5));
-      } catch (error) {
-        console.error("Erro:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
+    try {
+      const sortedProjects = projectsData
+        .sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        )
+        .slice(0, 6);
 
-    fetchLastProjects();
+      setLastProjects(sortedProjects);
+    } catch (error) {
+      console.error("Erro:", error);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   if (loading)

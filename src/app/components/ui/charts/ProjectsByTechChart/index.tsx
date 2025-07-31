@@ -4,26 +4,46 @@ import { COLORS } from "@/utils/colors";
 import { useEffect, useState } from "react";
 import { MoonLoader } from "react-spinners";
 import { PieChart, Pie, Tooltip, Cell, ResponsiveContainer } from "recharts";
+import { projectsData } from "@/data/data"; // Importe os dados dos projetos
 
 export function ProjectsByTechChart() {
   const [data, setData] = useState<{ tech: string; count: number }[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  // Função para gerar o gráfico com base nos dados dos projetos
+  const getTechCount = () => {
+    const techCount: { [key: string]: number } = {};
+
+    // Itera sobre todos os projetos
+    projectsData.forEach((project) => {
+      project.techs.forEach((tech) => {
+        // Conta a ocorrência de cada tecnologia
+        techCount[tech] = (techCount[tech] || 0) + 1;
+      });
+    });
+
+    // Converte o objeto de contagem para um array de objetos
+    const techData = Object.keys(techCount).map((tech) => ({
+      tech,
+      count: techCount[tech],
+    }));
+
+    return techData;
+  };
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const res = await fetch("/api/analytics/projects-by-tech");
-        const json = await res.json();
-        setData(json);
-      } catch (err) {
-        console.error("Erro ao buscar dados de techs:", err);
-      } finally {
-        setLoading(false);
-      }
-    }
+    setLoading(true);
 
-    fetchData();
-  }, []);
+    try {
+      // Simulando uma operação de fetch para os dados
+      const techData = getTechCount();
+      setData(techData);
+    } catch (err) {
+      console.error("Erro ao contar as tecnologias:", err);
+    } finally {
+      setLoading(false);
+    }
+  }, []); // O useEffect só rodará uma vez
 
   if (loading)
     return (

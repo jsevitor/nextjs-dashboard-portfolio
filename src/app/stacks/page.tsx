@@ -6,6 +6,8 @@ import { ButtonVariant } from "../components/ui/buttons";
 import { StackCardSkeleton } from "../components/ui/skeletons";
 import { toast } from "sonner";
 import { PageHeader } from "../components/layout/title/PageHeader";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { skills } from "@/data/data";
 
 type Stacks = {
   id: string;
@@ -15,26 +17,22 @@ type Stacks = {
 
 export default function Stacks() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [stacks, setStacks] = useState<Stacks[]>([]);
+  const [stacks, setStacks] = useLocalStorage<Stacks[]>("skills", []);
   const [icon, setIcon] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [editingId, setEditingId] = useState<string | null>(null);
 
-  const fetchStacks = async () => {
-    try {
-      const res = await fetch("/api/stacks");
-      if (!res.ok) throw new Error("Erro ao buscar stacks");
-      const data = await res.json();
-      setStacks(data);
-      setLoading(false);
-    } catch (error) {
-      console.error("Erro:", error);
-    }
-  };
-
   useEffect(() => {
-    fetchStacks();
+    if (!localStorage.getItem("skills") || skills.length === 0) {
+      setStacks([
+        /* valor padrão */
+      ]);
+      setLoading(false);
+    } else {
+      setStacks(skills);
+      setLoading(false);
+    }
   }, []);
 
   const handleSubmit = async (
@@ -42,53 +40,31 @@ export default function Stacks() {
   ) => {
     e?.preventDefault();
 
-    const payload = { icon, name };
-    const method = editingId ? "PUT" : "POST";
-    const url = editingId ? `/api/stacks/${editingId}` : "/api/stacks";
+    const newStack = {
+      id: editingId ?? crypto.randomUUID(),
+      name,
+      icon,
+    };
 
-    try {
-      const response = await fetch(url, {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+    const updated = editingId
+      ? stacks.map((s) => (s.id === editingId ? newStack : s))
+      : [...stacks, newStack];
 
-      if (!response.ok) throw new Error("Erro ao salvar stack");
+    setStacks(updated);
+    setName("");
+    setIcon("");
+    setEditingId(null);
+    setModalIsOpen(false);
 
-      const data = await response.json();
-      console.log("Stack salvo:", data);
-
-      // limpa tudo
-      setIcon("");
-      setName("");
-      setEditingId(null);
-      setModalIsOpen(false);
-      fetchStacks();
-
-      if (editingId) {
-        toast.success("Stack atualizado com sucesso!");
-      } else {
-        toast.success("Stack criado com sucesso!");
-      }
-    } catch (error) {
-      console.error("Erro ao salvar stack:", error);
-    }
+    toast.success(
+      editingId ? "Stack atualizado com sucesso!" : "Stack criado com sucesso!"
+    );
   };
 
   const handleDelete = async (id: string) => {
-    try {
-      const res = await fetch(`/api/stacks/${id}`, {
-        method: "DELETE",
-      });
-
-      if (!res.ok) throw new Error("Erro ao excluir stack");
-
-      fetchStacks();
-      toast.success("Stack deletado com sucesso!");
-    } catch (error) {
-      console.error("Erro ao deletar stack:", error);
-      toast.error("Erro ao deletar stack!");
-    }
+    const updated = stacks.filter((s) => s.id !== id);
+    setStacks(updated);
+    toast.success("Stack deletado!");
   };
 
   return (

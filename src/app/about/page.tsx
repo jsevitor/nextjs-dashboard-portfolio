@@ -1,13 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import { Layout, Modal } from "../components/layout";
 import { ButtonUrl, ButtonVariant } from "../components/ui/buttons";
-import UploadInput from "../components/upload/UploadInput";
 import { AboutCardSkeleton } from "../components/ui/skeletons";
 import { toast } from "sonner";
 import { PageHeader } from "../components/layout/title/PageHeader";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import Image from "next/image";
+import UploadInput from "../components/upload/UploadInput";
+import { aboutData } from "@/data/data";
 
 type About = {
   id: string;
@@ -19,7 +21,7 @@ type About = {
 
 export default function About() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [abouts, setAbouts] = useState<About[]>([]);
+  const [abouts, setAbouts] = useLocalStorage<About[]>("abouts", []);
   const [location, setLocation] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState<string | null>(null);
@@ -27,89 +29,52 @@ export default function About() {
   const [loading, setLoading] = useState(true);
   const [editingId, setEditingId] = useState<string | null>(null);
 
-  const fetchAbouts = async () => {
-    setLoading(true);
-    try {
-      const res = await fetch("/api/about");
-      if (!res.ok) throw new Error("Erro ao buscar abouts");
-      const data = await res.json();
-      setAbouts(data);
-      setLoading(false);
-    } catch (error) {
-      console.error("Erro:", error);
-    }
-  };
-
   useEffect(() => {
-    fetchAbouts();
-  }, []);
+    if (abouts.length === 0) {
+      setAbouts([aboutData]);
+      setLoading(false);
+    } else {
+      setLoading(false);
+    }
+  });
 
-  const handleSubmit = async (
+  const handleSubmit = (
     e?: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
   ) => {
     e?.preventDefault();
 
-    const payload = {
+    if (!location || !content || !image || !curriculum) {
+      toast.error("Preencha todos os campos obrigatórios!");
+      return;
+    }
+
+    const newAbout: About = {
+      id: editingId ?? crypto.randomUUID(),
       location,
       content,
       image,
       curriculum,
     };
 
-    const method = editingId ? "PUT" : "POST";
-    const url = editingId ? `/api/about/${editingId}` : "/api/about";
+    const updated = editingId
+      ? abouts.map((a) => (a.id === editingId ? newAbout : a))
+      : [...abouts, newAbout];
 
-    if (!location || !content || !image || !curriculum) {
-      console.error("Preencha todos os campos obrigatórios");
-      toast.error("Preencha todos os campos obrigatórios!");
-      return;
-    }
+    setAbouts(updated);
+    setLocation("");
+    setContent("");
+    setImage(null);
+    setCurriculum(null);
+    setEditingId(null);
+    setModalIsOpen(false);
 
-    try {
-      const response = await fetch(url, {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) throw new Error("Erro ao criar about");
-
-      const data = await response.json();
-      console.log("About criado com sucesso:", data);
-
-      setLocation("");
-      setContent("");
-      setImage(null);
-      setCurriculum(null);
-      setEditingId(null);
-      setModalIsOpen(false);
-      fetchAbouts();
-
-      if (editingId) {
-        toast.success("About atualizado com sucesso!");
-      } else {
-        toast.success("About criado com sucesso!");
-      }
-    } catch (error) {
-      console.error("Erro ao criar about:", error);
-      toast.error("Erro ao criar about!");
-    }
+    toast.success(editingId ? "About atualizado!" : "About criado!");
   };
 
-  const handleDelete = async (id: string) => {
-    try {
-      const res = await fetch(`/api/about/${id}`, {
-        method: "DELETE",
-      });
-
-      if (!res.ok) throw new Error("Erro ao excluir sobre");
-
-      fetchAbouts();
-      toast.success("Sobre deletado com sucesso!");
-    } catch (error) {
-      console.error("Erro ao deletar sobre:", error);
-      toast.error("Erro ao deletar sobre!");
-    }
+  const handleDelete = (id: string) => {
+    const updated = abouts.filter((a) => a.id !== id);
+    setAbouts(updated);
+    toast.success("Sobre deletado!");
   };
 
   return (

@@ -11,25 +11,45 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { projectsData } from "@/data/data";
 
 export function ProjectsOverTimeChart() {
   const [data, setData] = useState<{ month: string; count: number }[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  const getProjectsOverTime = () => {
+    const monthCount: { [key: string]: number } = {};
+
+    projectsData.forEach((project) => {
+      const createdAt = new Date(project.createdAt);
+      const month = `${createdAt.getFullYear()}-${(createdAt.getMonth() + 1)
+        .toString()
+        .padStart(2, "0")}`;
+
+      monthCount[month] = (monthCount[month] || 0) + 1;
+    });
+
+    const monthData = Object.keys(monthCount)
+      .map((month) => ({
+        month,
+        count: monthCount[month],
+      }))
+      .sort((a, b) => (a.month > b.month ? 1 : -1));
+
+    return monthData;
+  };
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const res = await fetch("/api/analytics/projects-over-time");
-        const json = await res.json();
-        setData(json);
-      } catch (err) {
-        console.error("Erro ao buscar dados do gráfico:", err);
-      } finally {
-        setLoading(false);
-      }
-    }
+    setLoading(true);
 
-    fetchData();
+    try {
+      const monthData = getProjectsOverTime();
+      setData(monthData);
+    } catch (err) {
+      console.error("Erro ao contar projetos por mês:", err);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   if (loading)
@@ -48,9 +68,13 @@ export function ProjectsOverTimeChart() {
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.1} />
           <XAxis
-            dataKey="day"
+            dataKey="month"
             stroke="var(--foreground)"
             tick={{ fill: "var(--foreground)" }}
+            tickFormatter={(month) => {
+              const [year, monthNumber] = month.split("-");
+              return `${monthNumber}/${year}`;
+            }}
           />
           <YAxis
             allowDecimals={false}

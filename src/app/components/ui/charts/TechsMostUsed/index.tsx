@@ -1,3 +1,4 @@
+import { projectsData } from "@/data/data";
 import { COLORS } from "@/utils/colors";
 import { useEffect, useState } from "react";
 import { MoonLoader } from "react-spinners";
@@ -7,28 +8,40 @@ export function TechsMostUsed() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const res = await fetch("/api/analytics/techs-most-used");
-        const json = await res.json();
-        setData(json.slice(0, 8));
-      } catch (err) {
-        console.error("Erro ao buscar dados do gráfico:", err);
-      } finally {
-        setLoading(false);
-      }
-    }
+    setLoading(true);
+    try {
+      const techCount: { [key: string]: number } = {};
 
-    fetchData();
+      projectsData.forEach((project) => {
+        project.techs.forEach((tech) => {
+          techCount[tech] = (techCount[tech] || 0) + 1;
+        });
+      });
+
+      const techsData = Object.keys(techCount)
+        .map((tech) => ({
+          name: tech,
+          count: techCount[tech],
+        }))
+        .sort((a, b) => b.count - a.count);
+
+      setData(techsData);
+    } catch (err) {
+      console.error("Erro ao processar dados de tecnologias:", err);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   const total = data.reduce((sum, tech) => sum + tech.count, 0);
 
   const techsComPorcentagem = total
-    ? data.map((tech) => ({
-        ...tech,
-        percent: Math.round((tech.count / total) * 100),
-      }))
+    ? data
+        .map((tech) => ({
+          ...tech,
+          percent: Math.round((tech.count / total) * 100),
+        }))
+        .slice(0, 8)
     : [];
 
   if (loading)

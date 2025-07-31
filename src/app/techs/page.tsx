@@ -6,11 +6,13 @@ import { ButtonVariant } from "../components/ui/buttons";
 import { TechCardSkeleton } from "../components/ui/skeletons";
 import { toast } from "sonner";
 import { PageHeader } from "../components/layout/title/PageHeader";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { techsData } from "@/data/data";
 
 type Techs = {
   id: string;
   name: string;
-  projectTechs: {
+  projectTechs?: {
     tech: {
       id: string;
       name: string;
@@ -20,25 +22,18 @@ type Techs = {
 
 export default function Techs() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [techs, setTechs] = useState<Techs[]>([]);
+  const [techs, setTechs] = useLocalStorage<Techs[]>("techs", []);
   const [name, setName] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [editingId, setEditingId] = useState<string | null>(null);
 
-  const fetchTechs = async () => {
-    try {
-      const res = await fetch("/api/tech");
-      if (!res.ok) throw new Error("Erro ao buscar techs");
-      const data = await res.json();
-      setTechs(data);
-      setLoading(false);
-    } catch (error) {
-      console.error("Erro:", error);
-    }
-  };
-
   useEffect(() => {
-    fetchTechs();
+    if (techs.length === 0) {
+      setTechs(techsData);
+      setLoading(false);
+    } else {
+      setLoading(false);
+    }
   }, []);
 
   const handleSubmit = async (
@@ -46,50 +41,30 @@ export default function Techs() {
   ) => {
     e?.preventDefault();
 
-    const payload = { name };
-    const method = editingId ? "PUT" : "POST";
-    const url = editingId ? `/api/tech/${editingId}` : "/api/tech";
+    const newTech: Techs = {
+      id: editingId ?? crypto.randomUUID(),
+      name,
+      projectTechs: [],
+    };
 
-    try {
-      const response = await fetch(url, {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+    const updated = editingId
+      ? techs.map((tech) => (tech.id === editingId ? newTech : tech))
+      : [...techs, newTech];
 
-      if (!response.ok) throw new Error("Erro ao salvar techs");
+    setTechs(updated);
+    setName("");
+    setEditingId(null);
+    setModalIsOpen(false);
 
-      const data = await response.json();
-      console.log("Techs salvo:", data);
-
-      setName("");
-      setEditingId(null);
-      fetchTechs();
-
-      if (editingId) {
-        toast.success("Techs atualizado com sucesso!");
-      } else {
-        toast.success("Techs criado com sucesso!");
-      }
-    } catch (error) {
-      console.error("Erro ao salvar techs:", error);
-    }
+    toast.success(
+      editingId ? "Tech atualizado com sucesso!" : "Tech criado com sucesso!"
+    );
   };
 
   const handleDelete = async (id: string) => {
-    try {
-      const res = await fetch(`/api/tech/${id}`, {
-        method: "DELETE",
-      });
-
-      if (!res.ok) throw new Error("Erro ao excluir techs");
-
-      fetchTechs();
-      toast.success("Techs deletado com sucesso!");
-    } catch (error) {
-      console.error("Erro ao deletar techs:", error);
-      toast.error("Erro ao deletar techs!");
-    }
+    const updated = techs.filter((tech) => tech.id !== id);
+    setTechs(updated);
+    toast.success("Tech deletado!");
   };
 
   return (

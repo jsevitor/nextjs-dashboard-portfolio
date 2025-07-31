@@ -6,6 +6,8 @@ import { ButtonVariant } from "../components/ui/buttons";
 import { ContactCardSkeleton } from "../components/ui/skeletons";
 import { toast } from "sonner";
 import { PageHeader } from "../components/layout/title/PageHeader";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { contacts } from "@/data/data";
 
 type Contacts = {
   id: string;
@@ -17,7 +19,7 @@ type Contacts = {
 
 export default function Contacts() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [contact, setContact] = useState<Contacts[]>([]);
+  const [contact, setContact] = useLocalStorage<Contacts[]>("contacts", []);
   const [icon, setIcon] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [user, setUser] = useState<string>("");
@@ -25,21 +27,14 @@ export default function Contacts() {
   const [loading, setLoading] = useState(true);
   const [editingId, setEditingId] = useState<string | null>(null);
 
-  const fetchContacts = async () => {
-    try {
-      setLoading(true);
-      const res = await fetch("/api/contacts");
-      if (!res.ok) throw new Error("Erro ao buscar contatos");
-      const data = await res.json();
-      setContact(data);
-      setLoading(false);
-    } catch (error) {
-      console.error("Erro:", error);
-    }
-  };
-
   useEffect(() => {
-    fetchContacts();
+    if (!localStorage.getItem("contacts") || contact.length === 0) {
+      setContact(contacts);
+      setLoading(false);
+    } else {
+      setContact(contact);
+      setLoading(false);
+    }
   }, []);
 
   const handleSubmit = async (
@@ -47,56 +42,34 @@ export default function Contacts() {
   ) => {
     e?.preventDefault();
 
-    const payload = { icon, name, user, link };
-    const method = editingId ? "PUT" : "POST";
-    const url = editingId ? `/api/contacts/${editingId}` : "/api/contacts";
+    const newContact: Contacts = {
+      id: editingId ?? crypto.randomUUID(),
+      icon,
+      name,
+      user,
+      link,
+    };
 
-    try {
-      const response = await fetch(url, {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+    const updatedContacts = [...contact, newContact];
+    setContact(updatedContacts);
+    setIcon("");
+    setName("");
+    setUser("");
+    setLink("");
+    setEditingId(null);
+    setModalIsOpen(false);
 
-      if (!response.ok) throw new Error("Erro ao salvar contato");
-
-      const data = await response.json();
-      console.log("Contato salvo:", data);
-
-      // limpa tudo
-      setIcon("");
-      setName("");
-      setUser("");
-      setLink("");
-      setEditingId(null);
-      setModalIsOpen(false);
-      fetchContacts();
-
-      if (editingId) {
-        toast.success("Contato atualizado com sucesso");
-      } else {
-        toast.success("Contato criado com sucesso");
-      }
-    } catch (error) {
-      console.error("Erro ao salvar contato:", error);
-      toast.error("Erro ao salvar contato");
-    }
+    toast.success(
+      editingId
+        ? "Contato atualizado com sucesso!"
+        : "Contato criado com sucesso!"
+    );
   };
 
   const handleDelete = async (id: string) => {
-    try {
-      const res = await fetch(`/api/contacts/${id}`, {
-        method: "DELETE",
-      });
-
-      if (!res.ok) throw new Error("Erro ao excluir contato");
-
-      fetchContacts();
-      toast.success("Contato deletado com sucesso!");
-    } catch (error) {
-      console.error("Erro ao deletar contato:", error);
-      toast.error("Erro ao deletar contato!");
-    }
+    const updated = contact.filter((contact) => contact.id !== id);
+    setContact(updated);
+    toast.success("Contato deletado!");
   };
 
   return (

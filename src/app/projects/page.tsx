@@ -8,21 +8,26 @@ import { ButtonUrl, ButtonVariant } from "../components/ui/buttons";
 import { ProjectCardSkeleton } from "../components/ui/skeletons";
 import { toast } from "sonner";
 import { PageHeader } from "../components/layout/title/PageHeader";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { projectsData, techsData } from "@/data/data";
 
 type Project = {
   id: string;
   title: string;
   description: string;
   image: string;
-  projectTechs: {
+  isFeatured: boolean;
+  demoUrl: string;
+  repoUrl: string;
+  createdAt?: string;
+  updatedAt?: string;
+  projectTechs?: {
     tech: {
       id: string;
       name: string;
     };
   }[];
-  isFeatured: boolean;
-  demoUrl: string;
-  repoUrl: string;
+  techs?: string[];
 };
 
 type Tech = {
@@ -30,9 +35,9 @@ type Tech = {
   name: string;
 };
 
-export default function About() {
+export default function Projects() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [projects, setProjects] = useLocalStorage<Project[]>("projects", []);
   const [techs, setTechs] = useState<Tech[]>([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -44,106 +49,68 @@ export default function About() {
   const [loading, setLoading] = useState(true);
   const [editingId, setEditingId] = useState<string | null>(null);
 
-  const fetchProjects = async () => {
-    setLoading(true);
-    try {
-      const res = await fetch("/api/projects");
-      if (!res.ok) throw new Error("Erro ao buscar projetos");
-      const data = await res.json();
-      setProjects(data);
-    } catch (error) {
-      console.error("Erro:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    const fetchTechs = async () => {
-      try {
-        const res = await fetch("/api/tech");
-        if (!res.ok) throw new Error("Erro ao buscar tecnologias");
-        const data = await res.json();
-        setTechs(data);
-      } catch (error) {
-        console.error("Erro:", error);
-      }
-    };
+    if (projects.length === 0) {
+      setProjects(projectsData);
+    }
 
-    fetchProjects();
-    fetchTechs();
-  }, []);
+    if (techs.length === 0) {
+      setTechs(techsData);
+    }
+
+    setLoading(false);
+  }, [projects]);
 
   const handleSubmit = async (
     e?: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
   ) => {
     e?.preventDefault();
 
-    const payload = {
+    if (
+      !title ||
+      !description ||
+      !image ||
+      !demoUrl ||
+      !repoUrl ||
+      !techIds.length
+    ) {
+      toast.error("Preencha todos os campos obrigatórios!");
+      return;
+    }
+
+    const newProject: Project = {
+      id: crypto.randomUUID(),
       title,
       description,
       image,
+      projectTechs: techIds.map((id) => ({ tech: { id, name: "" } })),
+      isFeatured,
       demoUrl,
       repoUrl,
-      isFeatured,
-      techs: techIds.map((techId, index) => ({
-        techId,
-        ordem: index + 1,
-      })),
     };
 
-    const method = editingId ? "PUT" : "POST";
-    const url = editingId ? `/api/projects/${editingId}` : "/api/projects";
+    setProjects([...projects, newProject]);
+    toast.success("Projeto criado com sucesso!");
+    setModalIsOpen(false);
+    clearForm();
+  };
 
-    try {
-      const response = await fetch(url, {
-        method,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) throw new Error("Erro ao criar projeto");
-
-      toast.success("Projeto salvo com sucesso!");
-      const data = await response.json();
-      console.log("Projeto criado com sucesso:", data);
-
-      fetchProjects();
-
-      if (editingId) {
-        toast.success("Projeto atualizado com sucesso!");
-      } else {
-        toast.success("Projeto adicionado com sucesso!");
-      }
-    } catch (error) {
-      console.error("Erro ao enviar projeto:", error);
-      toast.error("Erro ao enviar projeto!");
-    } finally {
-      setTitle("");
-      setDescription("");
-      setImage("");
-      setDemoUrl("");
-      setRepoUrl("");
-      setTechIds([]);
-      setIsFeatured(false);
-      setEditingId(null);
-      setModalIsOpen(false);
-    }
+  const clearForm = () => {
+    setTitle("");
+    setDescription("");
+    setImage("");
+    setDemoUrl("");
+    setRepoUrl("");
+    setTechIds([]);
+    setIsFeatured(false);
   };
 
   const handleDelete = async (id: string) => {
     const toastId = toast.loading("Excluindo o projeto...");
 
     try {
-      const res = await fetch(`/api/projects/${id}`, {
-        method: "DELETE",
-      });
-
-      if (!res.ok) throw new Error("Erro ao excluir projeto");
-
-      fetchProjects();
+      const updatedProjects = projects.filter((project) => project.id !== id);
+      setProjects(updatedProjects);
       toast.success("Projeto deletado com sucesso!", { id: toastId });
     } catch (error) {
       console.error("Erro ao deletar projeto:", error);
@@ -178,18 +145,19 @@ export default function About() {
               </div>
 
               <div className="flex flex-col justify-center gap-2 w-full font-extralight">
-                <div className=" font-bold">
+                <div className="font-bold">
                   <p>{project.title}</p>
                 </div>
-                <div className="">
+                <div>
                   <p>{project.description}</p>
                 </div>
                 <div className="py-2 font-normal">
-                  {project.projectTechs.map(({ tech }) => tech.name).join(", ")}
+                  {project.techs && project.techs.join(", ")}
                 </div>
+
                 <div className="flex justify-center lg:justify-start gap-4 font-normal">
                   <ButtonUrl url={project.demoUrl} label="Demo" />
-                  <ButtonUrl url={project.repoUrl} label="Repositório" />
+                  <ButtonUrl url={project.repoUrl} label="Repositório" />
                 </div>
               </div>
 
@@ -203,7 +171,7 @@ export default function About() {
                     setImage(project.image);
                     setDemoUrl(project.demoUrl);
                     setRepoUrl(project.repoUrl);
-                    setTechIds(project.projectTechs.map(({ tech }) => tech.id));
+                    // setTechIds( project.projectTechs.map(({ tech }) => tech.id));
                     setIsFeatured(project.isFeatured || false);
                     setModalIsOpen(true);
                   }}
