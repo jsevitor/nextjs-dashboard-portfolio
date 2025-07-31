@@ -1,14 +1,34 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { ButtonHamburger } from "../../ui/buttons";
 import { useLockBodyScroll } from "@/hooks/useLockBodyScroll";
+import Link from "next/link";
 import UserInfro from "../../user/UserInfo";
 import ThemeToggle from "../../upload/theme_toggle/ThemeToggle";
 import LogoutButton from "../../user/LogoutButton";
 
+/**
+ * Sidebar Component
+ *
+ * Componente responsável por exibir uma barra lateral de navegação, tanto para dispositivos móveis quanto para desktop.
+ * Exibe um menu de navegação com links para diferentes páginas da aplicação, além de permitir alternar o tema e realizar o logout.
+ * No modo mobile, exibe um menu de hambúrguer que pode ser aberto e fechado.
+ *
+ * ▸ **Responsabilidade**
+ * - Exibir menu de navegação com links para diferentes páginas
+ * - Exibir opção de alternância de tema e botão de logout
+ * - Responsividade para adaptar-se ao layout móvel e desktop
+ * - Bloquear o scroll da página quando o menu estiver aberto no mobile
+ *
+ * @returns {JSX.Element} Componente da barra lateral de navegação
+ *
+ * @example
+ * ```tsx
+ * <Sidebar />
+ * ```
+ */
 export function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
