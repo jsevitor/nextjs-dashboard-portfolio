@@ -8,21 +8,33 @@ import { toast } from "sonner";
 import { PageHeader } from "../components/layout/title/PageHeader";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { techsData } from "@/data/data";
+import { TechsProps } from "@/types/techs";
 
-type Techs = {
-  id: string;
-  name: string;
-  projectTechs?: {
-    tech: {
-      id: string;
-      name: string;
-    };
-  }[];
-};
-
+/**
+ * Techs Component
+ *
+ * Componente responsável por gerenciar as tecnologias: criar, editar, listar e deletar.
+ * Utiliza o hook `useLocalStorage` para persistir dados localmente no navegador.
+ * Exibe a lista de tecnologias e permite a criação ou edição de novas.
+ *
+ * ▸ **Responsabilidade**
+ * - Listar tecnologias armazenadas
+ * - Criar novas tecnologias
+ * - Editar tecnologias existentes
+ * - Deletar tecnologias
+ * - Armazenar dados em localStorage
+ * - Exibir feedbacks via `toast`
+ *
+ * @returns {JSX.Element} Componente de gerenciamento de tecnologias
+ *
+ * @example
+ * ```tsx
+ * <Techs />
+ * ```
+ */
 export default function Techs() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [techs, setTechs] = useLocalStorage<Techs[]>("techs", []);
+  const [techs, setTechs] = useLocalStorage<TechsProps[]>("techs", []);
   const [name, setName] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -36,12 +48,23 @@ export default function Techs() {
     }
   }, []);
 
+  /**
+   * handleSubmit
+   *
+   * Função responsável por criar uma nova tecnologia ou atualizar uma existente.
+   * Verifica se o nome foi preenchido corretamente, e cria ou atualiza a tecnologia conforme o estado de `editingId`.
+   * Exibe um feedback via `toast` sobre sucesso ou falha da operação.
+   *
+   * @param {React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>} [e] - Evento do formulário ou clique do botão.
+   *
+   * @returns {Promise<void>}
+   */
   const handleSubmit = async (
     e?: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
   ) => {
     e?.preventDefault();
 
-    const newTech: Techs = {
+    const newTech: TechsProps = {
       id: editingId ?? crypto.randomUUID(),
       name,
       projectTechs: [],
@@ -61,6 +84,16 @@ export default function Techs() {
     );
   };
 
+  /**
+   * handleDelete
+   *
+   * Função responsável por remover uma tecnologia da lista com base no ID fornecido.
+   * Atualiza o estado e o armazenamento local, e exibe um feedback via `toast`.
+   *
+   * @param {string} id - ID da tecnologia a ser removida.
+   *
+   * @returns {Promise<void>}
+   */
   const handleDelete = async (id: string) => {
     const updated = techs.filter((tech) => tech.id !== id);
     setTechs(updated);

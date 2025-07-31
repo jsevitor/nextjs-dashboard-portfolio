@@ -8,18 +8,40 @@ import { toast } from "sonner";
 import { PageHeader } from "../components/layout/title/PageHeader";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { contacts } from "@/data/data";
+import { ContactsProps } from "@/types/contacts";
 
-type Contacts = {
-  id: string;
-  icon: string;
-  name: string;
-  user: string;
-  link: string;
-};
-
+/**
+ * Contacts Component
+ *
+ * Componente responsável por exibir, adicionar, editar e remover contatos na interface de administração.
+ * Utiliza `useLocalStorage` para persistência dos dados localmente no navegador.
+ *
+ * ▸ **Responsabilidade**
+ * - Listar contatos (ícone, nome, usuário e link)
+ * - Permitir criar e editar contatos via modal
+ * - Armazenar dados em localStorage
+ * - Exibir feedback via `toast`
+ *
+ * ▸ **Funcionalidades**
+ * - Exibição de contatos com ícones e informações
+ * - Edição de contatos existentes
+ * - Remoção de contatos individualmente
+ * - Criação de novos contatos com formulário
+ * - Skeleton enquanto carrega
+ *
+ * @returns {JSX.Element} Componente de gerenciamento de contatos
+ *
+ * @example
+ * ```tsx
+ * <Contacts />
+ * ```
+ */
 export default function Contacts() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [contact, setContact] = useLocalStorage<Contacts[]>("contacts", []);
+  const [contact, setContact] = useLocalStorage<ContactsProps[]>(
+    "contacts",
+    []
+  );
   const [icon, setIcon] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [user, setUser] = useState<string>("");
@@ -37,12 +59,25 @@ export default function Contacts() {
     }
   }, []);
 
+  /**
+   * handleSubmit
+   *
+   * Função responsável por criar um novo contato ou atualizar um existente.
+   * Valida e persiste os dados no `localStorage` através do hook `useLocalStorage`.
+   * Se `editingId` estiver definido, deve atualizar um contato existente, senão adiciona um novo.
+   * Exibe mensagem de sucesso com `toast`.
+   *
+   * @param {React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>} [e] - Evento do formulário ou clique do botão.
+   *
+   * @returns {Promise<void>}
+   *
+   */
   const handleSubmit = async (
     e?: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
   ) => {
     e?.preventDefault();
 
-    const newContact: Contacts = {
+    const newContact: ContactsProps = {
       id: editingId ?? crypto.randomUUID(),
       icon,
       name,
@@ -50,7 +85,12 @@ export default function Contacts() {
       link,
     };
 
-    const updatedContacts = [...contact, newContact];
+    const updatedContacts = editingId
+      ? contact.map((contact) =>
+          contact.id === editingId ? newContact : contact
+        )
+      : [...contact, newContact];
+
     setContact(updatedContacts);
     setIcon("");
     setName("");
@@ -66,6 +106,16 @@ export default function Contacts() {
     );
   };
 
+  /**
+   * handleDelete
+   *
+   * Remove um contato da lista com base no ID fornecido.
+   * Atualiza o estado e o armazenamento local, e exibe um `toast` de sucesso.
+   *
+   * @param {string} id - ID do contato a ser removido.
+   *
+   * @returns {Promise<void>}
+   */
   const handleDelete = async (id: string) => {
     const updated = contact.filter((contact) => contact.id !== id);
     setContact(updated);

@@ -10,18 +10,38 @@ import { useLocalStorage } from "@/hooks/useLocalStorage";
 import Image from "next/image";
 import UploadInput from "../components/upload/UploadInput";
 import { aboutData } from "@/data/data";
+import { AboutProps } from "@/types/about";
 
-type About = {
-  id: string;
-  location: string;
-  content: string;
-  image: string;
-  curriculum: string;
-};
-
+/**
+ * About Component
+ *
+ * Componente responsável por exibir e gerenciar as informações da seção "Sobre" na interface de administração.
+ * Permite visualizar, criar, editar e excluir entradas com imagem, localização, conteúdo e currículo.
+ * Utiliza armazenamento local (`useLocalStorage`) para persistência dos dados.
+ *
+ * ▸ **Responsabilidade**
+ * - Exibir lista de entradas "Sobre" (dados de `localStorage`)
+ * - Permitir criação/edição/exclusão de entradas
+ * - Upload de imagem e currículo (`UploadInput`)
+ * - Utilizar modais para criação/edição
+ * - Feedback ao usuário via `toast`
+ *
+ * ▸ **Funcionalidades**
+ * - Exibição de imagem, localização, conteúdo e link do currículo
+ * - Edição/remoção de entradas existentes
+ * - Upload de arquivos com preview da imagem
+ * - Armazenamento local persistente (`useLocalStorage`)
+ *
+ * @returns {JSX.Element} Componente visual da seção "Sobre"
+ *
+ * @example
+ * ```tsx
+ * <About />
+ * ```
+ */
 export default function About() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [abouts, setAbouts] = useLocalStorage<About[]>("abouts", []);
+  const [abouts, setAbouts] = useLocalStorage<AboutProps[]>("abouts", []);
   const [location, setLocation] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState<string | null>(null);
@@ -38,6 +58,19 @@ export default function About() {
     }
   });
 
+  /**
+   * handleSubmit
+   *
+   * Função responsável por criar uma nova entrada ou atualizar uma existente na seção "Sobre".
+   * Valida os campos obrigatórios (localização, conteúdo, imagem e currículo) antes de salvar.
+   * Se `editingId` estiver definido, atualiza a entrada correspondente. Caso contrário, cria uma nova.
+   * Exibe mensagens de feedback com `toast`.
+   *
+   * @param {React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>} [e] - Evento de submissão ou clique do botão.
+   *
+   * @returns {void}
+   */
+
   const handleSubmit = (
     e?: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
   ) => {
@@ -48,7 +81,7 @@ export default function About() {
       return;
     }
 
-    const newAbout: About = {
+    const newAbout: AboutProps = {
       id: editingId ?? crypto.randomUUID(),
       location,
       content,
@@ -71,6 +104,16 @@ export default function About() {
     toast.success(editingId ? "About atualizado!" : "About criado!");
   };
 
+  /**
+   * handleDelete
+   *
+   * Função responsável por remover uma entrada da lista "Sobre" com base no `id` informado.
+   * Atualiza o estado local e o armazenamento local, além de exibir um feedback ao usuário via `toast`.
+   *
+   * @param {string} id - ID da entrada que será removida.
+   *
+   * @returns {void}
+   */
   const handleDelete = (id: string) => {
     const updated = abouts.filter((a) => a.id !== id);
     setAbouts(updated);

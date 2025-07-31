@@ -12,6 +12,31 @@ import { SectionTitle } from "./components/ui/title/SectionTitle";
 import { PageHeader } from "./components/layout/title/PageHeader";
 import { RecentProjects } from "./components/ui/charts/RecentProjects";
 
+/**
+ * Home Component
+ *
+ * Componente da página inicial do dashboard, exibindo informações agregadas sobre projetos, tecnologias e contatos.
+ * Este componente faz chamadas API para coletar dados sobre:
+ * - Total de projetos
+ * - Total de skills
+ * - Total de tecnologias
+ * - Total de contatos
+ * - Última atualização dos dados
+ *
+ * Exibe gráficos de resumo de projetos, distribuições por tecnologia e as tecnologias mais utilizadas ao longo do tempo.
+ *
+ * ▸ **Responsabilidade**
+ * - Exibir resumo de informações sobre projetos, skills, techs e contatos
+ * - Mostrar gráficos de métricas de projetos ao longo do tempo e por tecnologia
+ * - Exibir os projetos mais recentes
+ *
+ * @returns {JSX.Element} Componente de dashboard com as métricas e gráficos
+ *
+ * @example
+ * ```tsx
+ * <Home />
+ * ```
+ */
 export default function Home() {
   const [totalProjects, setTotalProjects] = useState<number | null>(null);
   const [totalSkills, setTotalSkills] = useState<number | null>(null);
@@ -19,6 +44,18 @@ export default function Home() {
   const [totalContacts, setTotalContacts] = useState<number | null>(null);
   const [lastUpdate, setLastUpdate] = useState<string | null>(null);
 
+  /**
+   * useEffect Hook
+   *
+   * Responsável por fazer as requisições assíncronas para coletar os dados agregados do backend.
+   * As requisições são feitas assim que o componente é montado na tela (efeito de montagem).
+   *
+   * - /api/projects/summary: Total de projetos.
+   * - /api/stacks/summary: Total de skills.
+   * - /api/tech/summary: Total de tecnologias.
+   * - /api/contacts/summary: Total de contatos.
+   * - /api/meta/last-update: Data da última atualização dos dados.
+   */
   useEffect(() => {
     const fetchProjectSummary = async () => {
       const res = await fetch("/api/projects/summary");
@@ -57,6 +94,15 @@ export default function Home() {
     fetchLastUpdate();
   }, []);
 
+  /**
+   * summaryInfos
+   *
+   * Array que contém as informações resumidas a serem exibidas no dashboard.
+   * Cada item inclui:
+   * - `title`: Título da informação.
+   * - `value`: Valor a ser exibido.
+   * - `icon`: Ícone a ser mostrado ao lado do título.
+   */
   const summaryInfos = [
     { title: "Projetos", value: totalProjects ?? "--", icon: "bi-briefcase" },
     { title: "Skills", value: totalSkills ?? "--", icon: "bi-stack" },

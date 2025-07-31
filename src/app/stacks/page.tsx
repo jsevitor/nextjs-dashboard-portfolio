@@ -8,16 +8,37 @@ import { toast } from "sonner";
 import { PageHeader } from "../components/layout/title/PageHeader";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { skills } from "@/data/data";
+import { StacksProps } from "@/types/stacks";
 
-type Stacks = {
-  id: string;
-  name: string;
-  icon: string;
-};
-
+/**
+ * Stacks Component
+ *
+ * Componente responsável por exibir, adicionar, editar e remover stacks na interface de administração.
+ * Utiliza `useLocalStorage` para persistência dos dados localmente no navegador.
+ *
+ * ▸ **Responsabilidade**
+ * - Listar stacks (ícone e nome)
+ * - Permitir criar e editar stacks via modal
+ * - Armazenar dados em localStorage
+ * - Exibir feedback via `toast`
+ *
+ * ▸ **Funcionalidades**
+ * - Exibição de stacks com ícones
+ * - Edição de stacks existentes
+ * - Remoção de stacks individualmente
+ * - Criação de novos stacks com formulário
+ * - Skeleton enquanto carrega
+ *
+ * @returns {JSX.Element} Componente de gerenciamento de stacks
+ *
+ * @example
+ * ```tsx
+ * <Stacks />
+ * ```
+ */
 export default function Stacks() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [stacks, setStacks] = useLocalStorage<Stacks[]>("skills", []);
+  const [stacks, setStacks] = useLocalStorage<StacksProps[]>("skills", []);
   const [icon, setIcon] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [loading, setLoading] = useState(true);
@@ -25,9 +46,7 @@ export default function Stacks() {
 
   useEffect(() => {
     if (!localStorage.getItem("skills") || skills.length === 0) {
-      setStacks([
-        /* valor padrão */
-      ]);
+      setStacks([]);
       setLoading(false);
     } else {
       setStacks(skills);
@@ -35,12 +54,25 @@ export default function Stacks() {
     }
   }, []);
 
+  /**
+   * handleSubmit
+   *
+   * Função responsável por criar um nova stack ou atualizar um existente.
+   * Valida e persiste os dados no `localStorage` através do hook `useLocalStorage`.
+   * Se `editingId` estiver definido, deve atualizar uma stack existente, senão adiciona uma nova.
+   * Exibe mensagem de sucesso com `toast`.
+   *
+   * @param {React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>} [e] - Evento do formulário ou clique do botão.
+   *
+   * @returns {Promise<void>}
+   *
+   */
   const handleSubmit = async (
     e?: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
   ) => {
     e?.preventDefault();
 
-    const newStack = {
+    const newStack: StacksProps = {
       id: editingId ?? crypto.randomUUID(),
       name,
       icon,
@@ -61,6 +93,16 @@ export default function Stacks() {
     );
   };
 
+  /**
+   * handleDelete
+   *
+   * Remove uma stack da lista com base no ID fornecido.
+   * Atualiza o estado e o armazenamento local, e exibe um `toast` de sucesso.
+   *
+   * @param {string} id - ID da stack a ser removida.
+   *
+   * @returns {Promise<void>}
+   */
   const handleDelete = async (id: string) => {
     const updated = stacks.filter((s) => s.id !== id);
     setStacks(updated);

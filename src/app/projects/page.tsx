@@ -10,35 +10,39 @@ import { toast } from "sonner";
 import { PageHeader } from "../components/layout/title/PageHeader";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { projectsData, techsData } from "@/data/data";
+import { ProjectProps } from "@/types/project";
+import { TechProps } from "@/types/techs";
 
-type Project = {
-  id: string;
-  title: string;
-  description: string;
-  image: string;
-  isFeatured: boolean;
-  demoUrl: string;
-  repoUrl: string;
-  createdAt?: string;
-  updatedAt?: string;
-  projectTechs?: {
-    tech: {
-      id: string;
-      name: string;
-    };
-  }[];
-  techs?: string[];
-};
-
-type Tech = {
-  id: string;
-  name: string;
-};
-
+/**
+ * Projects Component
+ *
+ * Componente responsável por gerenciar projetos: criar, editar, listar e deletar.
+ * Utiliza o hook `useLocalStorage` para persistir dados localmente no navegador.
+ * Exibe informações dos projetos, incluindo imagem, título, descrição, tecnologias, links de demo e repositório.
+ *
+ * ▸ **Responsabilidade**
+ * - Listar projetos armazenados
+ * - Criar novos projetos
+ * - Editar projetos existentes
+ * - Deletar projetos
+ * - Armazenar dados em localStorage
+ * - Exibir feedbacks via `toast`
+ * - Gerenciar a seleção de tecnologias associadas aos projetos
+ *
+ * @returns {JSX.Element} Componente de gerenciamento de projetos
+ *
+ * @example
+ * ```tsx
+ * <Projects />
+ * ```
+ */
 export default function Projects() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [projects, setProjects] = useLocalStorage<Project[]>("projects", []);
-  const [techs, setTechs] = useState<Tech[]>([]);
+  const [projects, setProjects] = useLocalStorage<ProjectProps[]>(
+    "projects",
+    []
+  );
+  const [techs, setTechs] = useState<TechProps[]>([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
@@ -61,25 +65,25 @@ export default function Projects() {
     setLoading(false);
   }, [projects]);
 
+  /**
+   * handleSubmit
+   *
+   * Função responsável por criar um novo projeto ou atualizar um existente.
+   * Realiza a validação dos campos obrigatórios (título, descrição, imagem, links, tecnologias).
+   * Se `editingId` estiver presente, realiza a atualização do projeto, senão cria um novo.
+   * Exibe um `toast` de sucesso ou erro conforme o caso.
+   *
+   * @param {React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>} [e] - Evento do formulário ou clique do botão.
+   *
+   * @returns {Promise<void>}
+   */
   const handleSubmit = async (
     e?: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
   ) => {
     e?.preventDefault();
 
-    if (
-      !title ||
-      !description ||
-      !image ||
-      !demoUrl ||
-      !repoUrl ||
-      !techIds.length
-    ) {
-      toast.error("Preencha todos os campos obrigatórios!");
-      return;
-    }
-
-    const newProject: Project = {
-      id: crypto.randomUUID(),
+    const newProject: ProjectProps = {
+      id: editingId ?? crypto.randomUUID(),
       title,
       description,
       image,
@@ -89,12 +93,31 @@ export default function Projects() {
       repoUrl,
     };
 
-    setProjects([...projects, newProject]);
-    toast.success("Projeto criado com sucesso!");
+    const updatedProjects = editingId
+      ? projects.map((project) =>
+          project.id === editingId ? newProject : project
+        )
+      : [...projects, newProject];
+
+    setProjects(updatedProjects);
+    toast.success(
+      editingId
+        ? "Projeto atualizado com sucesso!"
+        : "Projeto criado com sucesso!"
+    );
+
     setModalIsOpen(false);
     clearForm();
   };
 
+  /**
+   * clearForm
+   *
+   * Função responsável por limpar todos os campos do formulário de criação/edição de projeto.
+   * Reseta o estado dos campos de entrada (título, descrição, imagem, etc.) e o estado `isFeatured`.
+   *
+   * @returns {void}
+   */
   const clearForm = () => {
     setTitle("");
     setDescription("");
@@ -105,6 +128,16 @@ export default function Projects() {
     setIsFeatured(false);
   };
 
+  /**
+   * handleDelete
+   *
+   * Função responsável por remover um projeto da lista com base no ID fornecido.
+   * Atualiza o estado e o armazenamento local, e exibe um feedback via `toast`.
+   *
+   * @param {string} id - ID do projeto a ser removido.
+   *
+   * @returns {Promise<void>}
+   */
   const handleDelete = async (id: string) => {
     const toastId = toast.loading("Excluindo o projeto...");
 
