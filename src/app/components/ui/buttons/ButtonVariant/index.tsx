@@ -1,5 +1,31 @@
-import { ButtonVariantProps } from "../types";
+import { ButtonVariantProps } from "../../../../../types/ui/buttons";
 
+/**
+ * ButtonVariant Component
+ *
+ * Componente responsável por renderizar um botão com diferentes variantes estilísticas, como "salvar", "fechar", "adicionar", "editar" e "deletar".
+ * O botão pode incluir um ícone e um rótulo personalizável. As variantes predefinidas controlam a aparência do botão, e o comportamento é customizado através das propriedades `action` e `label`.
+ *
+ * ▸ **Responsabilidade**
+ * - Renderizar um botão com diferentes variantes de estilo
+ * - Exibir ícones e rótulos personalizados com base na variante
+ * - Executar uma ação personalizada ao ser clicado
+ *
+ * @param {ButtonVariantProps} props Propriedades do botão
+ * @param {string} [props.variant="save"] Define a variante do botão, que altera o estilo e comportamento (ex: "save", "close", "add", "edit", "delete")
+ * @param {Function} props.action Função que será chamada quando o botão for clicado
+ * @param {string} [props.label] Texto a ser exibido dentro do botão, substituindo o rótulo padrão
+ * @param {string} [props.icon] Classe do ícone a ser exibido dentro do botão, substituindo o ícone padrão
+ * @param {string} [props.className] Classe CSS adicional para customização do estilo do botão
+ *
+ * @returns {JSX.Element} Componente de botão com variante personalizada
+ *
+ * @example
+ * ```tsx
+ * <ButtonVariant variant="add" label="Adicionar Item" action={() => console.log("Item adicionado")} />
+ * <ButtonVariant variant="edit" icon="bi bi-pencil-square" action={() => console.log("Editar")} />
+ * ```
+ */
 export function ButtonVariant({
   variant = "save",
   action,

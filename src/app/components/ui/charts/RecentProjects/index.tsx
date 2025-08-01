@@ -1,28 +1,30 @@
 import { projectsData } from "@/data/data";
+import { ProjectProps } from "@/types/project";
 import { useEffect, useState } from "react";
 import { MoonLoader } from "react-spinners";
 
-type Project = {
-  id: string;
-  title: string;
-  description: string;
-  image: string;
-  isFeatured: boolean;
-  demoUrl: string;
-  repoUrl: string;
-  createdAt?: string;
-  updatedAt?: string;
-  projectTechs?: {
-    tech: {
-      id: string;
-      name: string;
-    };
-  }[];
-  techs?: string[];
-};
-
+/**
+ * RecentProjects Component
+ *
+ * Componente responsável por exibir os projetos mais recentes, com base na data de criação. Os projetos são ordenados
+ * de forma decrescente, e apenas os 6 projetos mais recentes são exibidos. Enquanto os dados estão sendo carregados,
+ * um indicador de carregamento é exibido. Caso não haja projetos disponíveis, uma mensagem é apresentada.
+ *
+ * ▸ **Responsabilidade**
+ * - Ordenar os projetos com base na data de criação
+ * - Exibir os 6 projetos mais recentes
+ * - Exibir um loader enquanto os dados são carregados
+ * - Exibir uma mensagem caso não existam projetos
+ *
+ * @returns {JSX.Element} Componente que exibe os 6 projetos mais recentes
+ *
+ * @example
+ * ```tsx
+ * <RecentProjects />
+ * ```
+ */
 export function RecentProjects() {
-  const [lastProjects, setLastProjects] = useState<Project[]>([]);
+  const [lastProjects, setLastProjects] = useState<ProjectProps[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

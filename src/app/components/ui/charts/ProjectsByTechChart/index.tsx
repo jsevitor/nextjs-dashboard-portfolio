@@ -4,25 +4,48 @@ import { COLORS } from "@/utils/colors";
 import { useEffect, useState } from "react";
 import { MoonLoader } from "react-spinners";
 import { PieChart, Pie, Tooltip, Cell, ResponsiveContainer } from "recharts";
-import { projectsData } from "@/data/data"; // Importe os dados dos projetos
+import { projectsData } from "@/data/data";
 
+/**
+ * ProjectsByTechChart Component
+ *
+ * Componente responsável por exibir um gráfico de pizza (pie chart) mostrando a distribuição de tecnologias nos projetos.
+ * O gráfico é baseado nos dados de `projectsData`, que contém informações sobre os projetos e suas respectivas tecnologias.
+ * Enquanto os dados estão sendo carregados, o componente exibe um loader. Se não houver dados disponíveis, uma mensagem é exibida.
+ *
+ * ▸ **Responsabilidade**
+ * - Calcular a quantidade de vezes que cada tecnologia é usada nos projetos
+ * - Exibir um gráfico de pizza com as tecnologias e suas porcentagens
+ * - Exibir um indicador de carregamento enquanto os dados são processados
+ * - Exibir uma mensagem quando não houver dados disponíveis
+ *
+ * @returns {JSX.Element} Componente que exibe o gráfico de pizza com a distribuição das tecnologias
+ *
+ * @example
+ * ```tsx
+ * <ProjectsByTechChart />
+ * ```
+ */
 export function ProjectsByTechChart() {
   const [data, setData] = useState<{ tech: string; count: number }[]>([]);
   const [loading, setLoading] = useState(false);
 
-  // Função para gerar o gráfico com base nos dados dos projetos
+  /**
+   * Função responsável por calcular a quantidade de vezes que cada tecnologia
+   * é usada nos projetos.
+   *
+   * @returns {Array<{tech: string, count: number}>} Um array com as tecnologias
+   * e suas respectivas quantidades de uso nos projetos.
+   */
   const getTechCount = () => {
     const techCount: { [key: string]: number } = {};
 
-    // Itera sobre todos os projetos
     projectsData.forEach((project) => {
       project.techs.forEach((tech) => {
-        // Conta a ocorrência de cada tecnologia
         techCount[tech] = (techCount[tech] || 0) + 1;
       });
     });
 
-    // Converte o objeto de contagem para um array de objetos
     const techData = Object.keys(techCount).map((tech) => ({
       tech,
       count: techCount[tech],
@@ -35,7 +58,6 @@ export function ProjectsByTechChart() {
     setLoading(true);
 
     try {
-      // Simulando uma operação de fetch para os dados
       const techData = getTechCount();
       setData(techData);
     } catch (err) {
@@ -43,7 +65,7 @@ export function ProjectsByTechChart() {
     } finally {
       setLoading(false);
     }
-  }, []); // O useEffect só rodará uma vez
+  }, []);
 
   if (loading)
     return (

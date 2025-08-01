@@ -3,6 +3,27 @@ import { COLORS } from "@/utils/colors";
 import { useEffect, useState } from "react";
 import { MoonLoader } from "react-spinners";
 
+/**
+ * TechsMostUsed Component
+ *
+ * Componente responsável por exibir as tecnologias mais utilizadas nos projetos, mostrando uma lista das tecnologias
+ * e suas respectivas porcentagens de uso. O gráfico de barras é exibido com a largura proporcional à porcentagem de uso.
+ * Enquanto os dados estão sendo carregados, um indicador de carregamento é exibido. Se não houver dados disponíveis,
+ * uma mensagem é mostrada.
+ *
+ * ▸ **Responsabilidade**
+ * - Contabilizar a quantidade de vezes que cada tecnologia é utilizada nos projetos
+ * - Exibir as tecnologias mais usadas com a porcentagem de uso em forma de barras
+ * - Exibir um loader enquanto os dados estão sendo processados
+ * - Exibir uma mensagem de erro caso não haja dados disponíveis
+ *
+ * @returns {JSX.Element} Componente que exibe as tecnologias mais utilizadas com suas respectivas porcentagens de uso
+ *
+ * @example
+ * ```tsx
+ * <TechsMostUsed />
+ * ```
+ */
 export function TechsMostUsed() {
   const [data, setData] = useState<{ name: string; count: number }[]>([]);
   const [loading, setLoading] = useState(true);

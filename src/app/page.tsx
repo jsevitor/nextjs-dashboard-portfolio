@@ -4,13 +4,15 @@ import { useEffect, useState } from "react";
 import { Card, Layout } from "./components/layout";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale/pt-BR";
-import { ProjectsOverTimeChart } from "./components/ui/charts/ProjectsOverTimeChart";
-import { ProjectsByTechChart } from "./components/ui/charts/ProjectsByTechChart";
-import { TechsMostUsed } from "./components/ui/charts/TechsMostUsed";
+import {
+  ProjectsOverTimeChart,
+  ProjectsByTechChart,
+  RecentProjects,
+  TechsMostUsed,
+} from "./components/ui/charts";
 import { COLORS } from "@/utils/colors";
 import { SectionTitle } from "./components/ui/title/SectionTitle";
 import { PageHeader } from "./components/layout/title/PageHeader";
-import { RecentProjects } from "./components/ui/charts/RecentProjects";
 
 /**
  * Home Component
