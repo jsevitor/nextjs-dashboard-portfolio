@@ -2,6 +2,23 @@
 
 import { signOut } from "next-auth/react";
 
+/**
+ * LogoutButton Component
+ *
+ * Componente de botão utilizado para encerrar a sessão do usuário autenticado.
+ * Integra-se ao `next-auth` para realizar o logout de forma segura e automática.
+ *
+ * ▸ **Responsabilidade**
+ * - Encerrar a sessão do usuário atual utilizando `signOut` da biblioteca `next-auth`
+ * - Fornecer um botão visual com ícone que represente a ação de logout
+ *
+ * @returns {JSX.Element} Botão que dispara o logout do usuário
+ *
+ * @example
+ * ```tsx
+ * <LogoutButton />
+ * ```
+ */
 export default function LogoutButton() {
   return (
     <button
