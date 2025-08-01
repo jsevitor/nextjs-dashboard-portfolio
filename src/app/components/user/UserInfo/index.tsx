@@ -36,7 +36,7 @@ export default function UserInfro() {
       <div className="flex items-center gap-4">
         <div className="flex items-center justify-center">
           <Image
-            src={user?.image as string}
+            src={(user?.image as string) || "/blank_user.png"}
             alt={user?.name as string}
             width={40}
             height={40}
