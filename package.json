@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "prisma generate && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "docs": "typedoc"
   },
   "dependencies": {
     "@prisma/client": "^6.12.0",
@@ -41,6 +42,7 @@
     "prisma": "^6.12.0",
     "tailwindcss": "^4",
     "tw-animate-css": "^1.3.6",
+    "typedoc": "^0.28.9",
     "typescript": "^5"
   }
 }

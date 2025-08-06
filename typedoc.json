@@ -1,0 +1,10 @@
+{
+  "entryPoints": ["src"],
+  "out": "docs",
+  "exclude": ["**/__tests__/**", "**/*.spec.ts"],
+  "includeVersion": true,
+  "excludePrivate": true,
+  "excludeExternals": true,
+  "excludeNotDocumented": true,
+  "entryPointStrategy": "expand"
+}

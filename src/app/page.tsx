@@ -13,6 +13,7 @@ import {
 import { COLORS } from "@/utils/colors";
 import { SectionTitle } from "./components/ui/title/SectionTitle";
 import { PageHeader } from "./components/layout/title/PageHeader";
+import { projectsData, skills, techsData, contacts } from "@/data/data";
 
 /**
  * Home Component
@@ -40,24 +41,19 @@ import { PageHeader } from "./components/layout/title/PageHeader";
  * ```
  */
 export default function Home() {
-  const [totalProjects, setTotalProjects] = useState<number | null>(null);
-  const [totalSkills, setTotalSkills] = useState<number | null>(null);
-  const [totalTechs, setTotalTechs] = useState<number | null>(null);
-  const [totalContacts, setTotalContacts] = useState<number | null>(null);
-  const [lastUpdate, setLastUpdate] = useState<string | null>(null);
+  const totalProjects = projectsData.length;
+  const totalSkills = skills.length;
+  const totalTechs = techsData.length;
+  const totalContacts = contacts.length;
 
-  /**
-   * useEffect Hook
-   *
-   * Responsável por fazer as requisições assíncronas para coletar os dados agregados do backend.
-   * As requisições são feitas assim que o componente é montado na tela (efeito de montagem).
-   *
-   * - /api/projects/summary: Total de projetos.
-   * - /api/stacks/summary: Total de skills.
-   * - /api/tech/summary: Total de tecnologias.
-   * - /api/contacts/summary: Total de contatos.
-   * - /api/meta/last-update: Data da última atualização dos dados.
-   */
+  const lastUpdate =
+    projectsData
+      .map((p) => new Date(p.updatedAt))
+      .sort((a, b) => b.getTime() - a.getTime())[0]
+      ?.toISOString() ?? null;
+
+  // useEffect comentado (API desativada temporariamente)
+  /*
   useEffect(() => {
     const fetchProjectSummary = async () => {
       const res = await fetch("/api/projects/summary");
@@ -95,21 +91,13 @@ export default function Home() {
     fetchContactSummary();
     fetchLastUpdate();
   }, []);
+  */
 
-  /**
-   * summaryInfos
-   *
-   * Array que contém as informações resumidas a serem exibidas no dashboard.
-   * Cada item inclui:
-   * - `title`: Título da informação.
-   * - `value`: Valor a ser exibido.
-   * - `icon`: Ícone a ser mostrado ao lado do título.
-   */
   const summaryInfos = [
-    { title: "Projetos", value: totalProjects ?? "--", icon: "bi-briefcase" },
-    { title: "Skills", value: totalSkills ?? "--", icon: "bi-stack" },
-    { title: "Techs", value: totalTechs ?? "--", icon: "bi-code-slash" },
-    { title: "Contatos", value: totalContacts ?? "--", icon: "bi-telephone" },
+    { title: "Projetos", value: totalProjects, icon: "bi-briefcase" },
+    { title: "Skills", value: totalSkills, icon: "bi-stack" },
+    { title: "Techs", value: totalTechs, icon: "bi-code-slash" },
+    { title: "Contatos", value: totalContacts, icon: "bi-telephone" },
   ];
 
   return (

@@ -1,0 +1,144 @@
+<!DOCTYPE html><html class="default" lang="en" data-base="./"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>nextjs-dashboard-portfolio - v0.1.0</title><meta name="description" content="Documentation for nextjs-dashboard-portfolio"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script defer src="assets/main.js"></script><script async src="assets/icons.js" id="tsd-icons-script"></script><script async src="assets/search.js" id="tsd-search-script"></script><script async src="assets/navigation.js" id="tsd-nav-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><a href="index.html" class="title">nextjs-dashboard-portfolio - v0.1.0</a><div id="tsd-toolbar-links"></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/><ul role="listbox" id="tsd-search-results"></ul><div id="tsd-search-status" aria-live="polite" aria-atomic="true"><div>Preparing search index...</div></div></dialog><a href="#" class="tsd-widget menu" id="tsd-toolbar-menu-trigger" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-menu"></use></svg></a></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><h1>nextjs-dashboard-portfolio - v0.1.0</h1></div><div class="tsd-panel tsd-typography"><h1 id="dashboard-portfólio" class="tsd-anchor-link">Dashboard Portfólio<a href="#dashboard-portfólio" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h1><p>Este é um projeto full stack de dashboard para portfólio de desenvolvedor, construído com Next.js, Prisma, TailwindCSS e gráficos com Recharts. A aplicação conta com autenticação via NextAuth, tema dark/light, e um painel administrativo para gerenciamento dos projetos.</p>
+<p>A ideia nasceu da minha necessidade pessoal por uma ferramenta que permitisse gerenciar meu portfólio de forma mais dinâmica e prática, sem precisar editar o código-fonte a cada atualização. Queria uma solução fácil de usar, escalável e que me desse autonomia para cadastrar, editar e visualizar meus projetos rapidamente, além de oferecer uma interface moderna e responsiva. Por isso, decidi construir este dashboard, combinando tecnologias modernas para atender exatamente essa demanda.</p>
+<p>Durante o desenvolvimento, busquei ir além da funcionalidade básica: estruturei a aplicação com foco em modularidade, design responsivo e alta performance. O estado da aplicação é gerenciado de forma leve com Zustand, e o upload de imagens foi integrado para enriquecer a apresentação dos projetos.</p>
+<p>Essa experiência foi uma excelente oportunidade para aplicar boas práticas de arquitetura full stack moderna, priorizando usabilidade, organização do código e autonomia na gestão de conteúdo do portfólio.</p>
+<h2 id="preview" class="tsd-anchor-link">Preview<a href="#preview" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Acesse o projeto em: <a href="https://dashb-portfolio.netlify.app/">https://dashb-portfolio.netlify.app/</a></p>
+<h2 id="screenshots" class="tsd-anchor-link">Screenshots<a href="#screenshots" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><h2 id="funcionalidades" class="tsd-anchor-link">Funcionalidades<a href="#funcionalidades" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><ul>
+<li>Autenticação com NextAuth (GitHub/Google)</li>
+<li>Alternância de tema (dark/light)</li>
+<li>Dashboard com gráficos de projetos por mês</li>
+<li>Gerenciamento de projetos com título, descrição, tecnologias e imagens</li>
+<li>Upload de imagens com <code>UploadThing</code></li>
+<li>Painel administrativo com controle total dos dados</li>
+<li>UI moderna e responsiva com TailwindCSS + componentes customizados</li>
+<li>Estrutura modular com componentes reutilizáveis</li>
+<li>Prisma + PostgreSQL para persistência de dados</li>
+<li>Layout responsivo (mobile e desktop)</li>
+</ul>
+<h2 id="tecnologias-e-ferramentas" class="tsd-anchor-link">Tecnologias e Ferramentas<a href="#tecnologias-e-ferramentas" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><table>
+<thead>
+<tr>
+<th>Stack</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Next.js 15</strong></td>
+<td>Framework React com App Router e Server Actions</td>
+</tr>
+<tr>
+<td><strong>React 19</strong></td>
+<td>Biblioteca base para componentes interativos</td>
+</tr>
+<tr>
+<td><strong>TailwindCSS 4</strong></td>
+<td>Framework utilitário para estilização responsiva</td>
+</tr>
+<tr>
+<td><strong>Lucide React</strong></td>
+<td>Ícones modernos e personalizáveis para a interface</td>
+</tr>
+<tr>
+<td><strong>Recharts</strong></td>
+<td>Biblioteca para visualização de dados em gráficos</td>
+</tr>
+<tr>
+<td><strong>React Spinners</strong></td>
+<td>Indicadores de carregamento para melhor UX</td>
+</tr>
+<tr>
+<td><strong>React Modal</strong></td>
+<td>Modal acessível e responsivo para interações pontuais</td>
+</tr>
+<tr>
+<td><strong>Zustand</strong></td>
+<td>Gerenciamento de estado leve e eficiente para UI</td>
+</tr>
+<tr>
+<td><strong>Sonner</strong></td>
+<td>Toasts modernos e configuráveis para feedback instantâneo</td>
+</tr>
+<tr>
+<td><strong>Prisma ORM 6</strong></td>
+<td>ORM para modelagem e acesso ao banco de dados</td>
+</tr>
+<tr>
+<td><strong>NextAuth</strong></td>
+<td>Autenticação com provedores OAuth e JWT</td>
+</tr>
+<tr>
+<td><strong>Formidable</strong></td>
+<td>Manipulação de uploads multipart/form-data</td>
+</tr>
+<tr>
+<td><strong>PostgreSQL</strong></td>
+<td>Banco de dados relacional utilizado pela aplicação</td>
+</tr>
+</tbody>
+</table>
+<h2 id="aviso-importante-sobre-o-banco-de-dados" class="tsd-anchor-link">Aviso Importante sobre o Banco de Dados<a href="#aviso-importante-sobre-o-banco-de-dados" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Este projeto foi desenvolvido utilizando Prisma ORM com suporte para bancos de dados como PostgreSQL e SQLite. No entanto, para fins de demonstração neste repositório, a alimentação dos dados está sendo feita por meio de um arquivo local estático, para facilitar o uso e evitar configurações adicionais.</p>
+<p>Apesar disso, toda a arquitetura da API está implementada e disponível no código, pronta para funcionar com um banco de dados real assim que configurado.</p>
+<h2 id="aprendizados" class="tsd-anchor-link">Aprendizados<a href="#aprendizados" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Durante esse projeto, aprofundei meu conhecimento em:</p>
+<ul>
+<li>Autenticação segura com NextAuth, incluindo integração com provedores OAuth e tokens JWT.</li>
+<li>Criação de temas dinâmicos com <strong>Tailwind CSS</strong> usando dados externos.</li>
+<li>Gerenciamento global de estado com Zustand para controle de UI e interações administrativas.</li>
+<li>Visualização de dados com Recharts, construindo gráficos interativos e personalizados.</li>
+<li>Upload e manipulação de arquivos com Formidable, integrando com o banco de dados via Prisma ORM.</li>
+<li>Implementação de feedback instantâneo via Sonner, melhorando a experiência do usuário no painel admin.</li>
+</ul>
+<h2 id="instalação" class="tsd-anchor-link">Instalação<a href="#instalação" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><ul>
+<li>Clone o repositório<pre><code class="bash"><span class="hl-0">git</span><span class="hl-1"> </span><span class="hl-2">clone</span><span class="hl-1"> </span><span class="hl-2">https://github.com/jsevitor/nextjs-dashboard-portfolio.git</span>
+</code><button type="button">Copy</button></pre>
+
+</li>
+<li>Instale as dependências<pre><code class="bash"><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">install</span>
+</code><button type="button">Copy</button></pre>
+
+</li>
+<li>Rode localmente<pre><code class="bash"><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">run</span><span class="hl-1"> </span><span class="hl-2">dev</span>
+</code><button type="button">Copy</button></pre>
+
+</li>
+</ul>
+<h2 id="configuração-do-ambiente-env" class="tsd-anchor-link">Configuração do Ambiente (.env)<a href="#configuração-do-ambiente-env" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Para rodar a aplicação localmente ou em produção, é necessário configurar as variáveis de ambiente no arquivo .env, na raiz do projeto.</p>
+<p>Variáveis principais usadas:</p>
+<ul>
+<li><strong>DATABASE_URL</strong>: URL de conexão com o banco PostgreSQL (exemplo para produção usando Neon DB):</li>
+</ul>
+<pre><code class="bash"><span class="hl-0">postgresql://portfolio_owner:npg_yuN8f2PZzwTk@ep-orange-unit-ace6kizo-pooler.sa-east-1.aws.neon.tech/portfolio?sslmode</span><span class="hl-2">=require</span>
+</code><button type="button">Copy</button></pre>
+
+<ul>
+<li><strong>GITHUB_ID</strong> e <strong>GITHUB_SECRET</strong>: Credenciais do OAuth para autenticação com GitHub.</li>
+<li><strong>GOOGLE_CLIENT_ID</strong> e <strong>GOOGLE_CLIENT_SECRET</strong>: Credenciais OAuth para Google (usado no demo).</li>
+<li><strong>NEXTAUTH_SECRET</strong>: Chave secreta para a criptografia das sessões do NextAuth.</li>
+<li><strong>NEXTAUTH_URL</strong>: URL base da aplicação (exemplo: <a href="http://localhost:3000">http://localhost:3000</a> ou URL do deploy).</li>
+<li><strong>UPLOADTHING_APP_ID</strong> e <strong>UPLOADTHING_TOKEN</strong>: Credenciais para upload de arquivos.</li>
+</ul>
+<p><strong>Observações</strong></p>
+<ul>
+<li>No repositório de demonstração, a alimentação dos dados é feita via arquivo local estático, portanto a configuração do banco (DATABASE_URL) pode ser omitida inicialmente.</li>
+<li>A arquitetura da API está totalmente preparada para funcionar com banco de dados real usando Prisma; basta configurar o .env adequadamente para usar PostgreSQL, SQLite, ou outro compatível.</li>
+<li>Por segurança, as variáveis sensíveis não devem ser expostas em repositórios públicos.</li>
+</ul>
+<h2 id="documentação" class="tsd-anchor-link">Documentação<a href="#documentação" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>A documentação completa do projeto foi gerada com <a href="https://typedoc.org/">TypeDoc</a> e está disponível em:</p>
+<p>🔗 <a href="https://jsevitor.github.io/restaurant-menu-challenge/">Documentação Técnica (GitHub Pages)</a></p>
+<p>Ela inclui descrições de tipos, estruturas, funções e lógica central do projeto — útil para entendimento rápido da base de código.</p>
+<h2 id="possibilidades-de-melhoria" class="tsd-anchor-link">Possibilidades de melhoria<a href="#possibilidades-de-melhoria" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><ul>
+<li>Persistência do carrinho com localStorage</li>
+<li>Integração com API de pedidos (checkout)</li>
+<li>Feedback visual com toast para ações do usuário</li>
+<li>Autenticação e rotas protegidas (login)</li>
+</ul>
+<h2 id="contribuição" class="tsd-anchor-link">Contribuição<a href="#contribuição" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Contribuições são bem-vindas! Se você tiver sugestões ou melhorias, sinta-se à vontade para abrir uma issue ou enviar um pull request.</p>
+<h2 id="licença" class="tsd-anchor-link">Licença<a href="#licença" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Este projeto é apenas para fins de avaliação técnica.</p>
+<h2 id="contato" class="tsd-anchor-link">Contato<a href="#contato" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Caso queira entrar em contato, me encontre em:</p>
+<ul>
+<li>LinkedIn: <a href="https://linkedin.com/in/josevitoroliveira">linkedin.com/in/josevitoroliveira</a></li>
+<li>E-mail: <a href="mailto:vitorjseo@gmail.com">vitorjseo@gmail.com</a></li>
+</ul>
+<hr>
+<p>Desenvolvido por <strong>Vitor Oliveira</strong>.</p>
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-chevronDown"></use></svg><h3>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-chevronDown"></use></svg><h3>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#dashboard-portfólio"><span>Dashboard <wbr/>Portfólio</span></a><ul><li><a href="#preview"><span>Preview</span></a></li><li><a href="#screenshots"><span>Screenshots</span></a></li><li><a href="#funcionalidades"><span>Funcionalidades</span></a></li><li><a href="#tecnologias-e-ferramentas"><span>Tecnologias e <wbr/>Ferramentas</span></a></li><li><a href="#aviso-importante-sobre-o-banco-de-dados"><span>Aviso <wbr/>Importante sobre o <wbr/>Banco de <wbr/>Dados</span></a></li><li><a href="#aprendizados"><span>Aprendizados</span></a></li><li><a href="#instalação"><span>Instalação</span></a></li><li><a href="#configuração-do-ambiente-env"><span>Configuração do <wbr/>Ambiente (.env)</span></a></li><li><a href="#documentação"><span>Documentação</span></a></li><li><a href="#possibilidades-de-melhoria"><span>Possibilidades de melhoria</span></a></li><li><a href="#contribuição"><span>Contribuição</span></a></li><li><a href="#licença"><span>Licença</span></a></li><li><a href="#contato"><span>Contato</span></a></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="modules.html">nextjs-dashboard-portfolio - v0.1.0</a><ul class="tsd-small-nested-navigation" id="tsd-nav-container"><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>
