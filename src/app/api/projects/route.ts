@@ -2,6 +2,25 @@ import { isAuthorized } from "@/lib/authorized";
 import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
+/**
+ * GET Handler - Listar Projetos
+ *
+ * Manipulador da requisição GET que retorna todos os projetos cadastrados,
+ * ordenados por data de criação (mais recentes primeiro) e com suas tecnologias associadas.
+ *
+ * ▸ **Responsabilidade**
+ * - Buscar todos os registros da tabela `project`
+ * - Incluir as tecnologias associadas (`projectTechs`) ordenadas por `ordem`
+ * - Retornar os dados em formato JSON com headers CORS apropriados
+ *
+ * @returns {Promise<NextResponse>} Resposta JSON contendo a lista de projetos e tecnologias associadas
+ *
+ * @example
+ *
+ * const response = await fetch("/api/project", { method: "GET" });
+ * const data = await response.json();
+ * // data = [{ id: "1", title: "...", projectTechs: [...] }, ...]
+ */
 export async function GET() {
   const projects = await prisma.project.findMany({
     orderBy: { createdAt: "desc" },
@@ -25,6 +44,40 @@ export async function GET() {
   });
 }
 
+/**
+ * POST Handler - Criar Projeto
+ *
+ * Manipulador da requisição POST que cria um novo projeto no banco de dados,
+ * incluindo suas tecnologias associadas.
+ *
+ * ▸ **Responsabilidade**
+ * - Verificar se a requisição é autorizada
+ * - Validar os dados recebidos no corpo da requisição
+ * - Criar um novo projeto na tabela `project`
+ * - Criar múltiplas associações na tabela `projectTech` com as tecnologias informadas
+ * - Retornar o projeto recém-criado com suas tecnologias associadas e ordenadas
+ *
+ * @param {NextRequest} req - Objeto da requisição contendo os dados do novo projeto
+ *
+ * @returns {Promise<NextResponse>} Resposta JSON contendo o projeto criado ou erro apropriado
+ *
+ * @example
+ *
+ * const response = await fetch("/api/project", {
+ *   method: "POST",
+ *   body: JSON.stringify({
+ *     title: "Novo Projeto",
+ *     description: "Descrição...",
+ *     image: "url-da-imagem",
+ *     demoUrl: "https://demo.com",
+ *     repoUrl: "https://github.com/repo",
+ *     techs: [{ techId: "1", ordem: 1 }],
+ *     isFeatured: true
+ *   }),
+ * });
+ * const data = await response.json();
+ * // data = { id: "123", title: "Novo Projeto", ..., projectTechs: [...] }
+ */
 export async function POST(req: NextRequest) {
   if (!(await isAuthorized(req))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
