@@ -10,7 +10,7 @@ Essa experiência foi uma excelente oportunidade para aplicar boas práticas de 
 
 ## Preview
 
-Acesse o projeto em: https://dashb-portfolio.netlify.app/
+Acesse o projeto em: https://nextjs-dashboard-portfolio.vercel.app/login
 
 ## Screenshots
 
