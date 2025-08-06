@@ -14,7 +14,9 @@ Acesse o projeto em: https://dashb-portfolio.netlify.app/
 
 ## Screenshots
 
-
+<img width="1920" height="914" alt="1  Login" src="https://github.com/user-attachments/assets/f534d036-48a1-4119-9a16-0069005c4445" />
+<img width="1908" height="915" alt="2  Dashborad_light" src="https://github.com/user-attachments/assets/b68add03-3ac8-4963-9def-9a99ba357b8b" />
+<img width="1908" height="916" alt="image" src="https://github.com/user-attachments/assets/752d876c-79c1-49f1-a5e6-1bdf4f60f264" />
 
 ## Funcionalidades
 
